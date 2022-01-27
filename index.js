@@ -16,7 +16,62 @@ app.use(express.static(staticPath));
 
 
 app.use(cors());
-app.options('*', cors())
+app.options('*', cors());
+
+
+const sumDigit = async (num, sum = 0) => {
+    if (num) {
+        return await sumDigit(Math.floor(num / 10), sum + (num % 10));
+    }
+    return await sum;
+};
+
+const maximumDigits = async (num) => {
+    let mySet = new Set();
+
+    while (num > 0) {
+        let k = num % 10;
+        num = Math.floor(num / 10);
+        mySet.add(k);
+    }
+
+    return mySet.size;
+
+}
+
+const maximumFreq = async (num) => {
+
+    var hash = new Map();
+    let arr = [];
+
+    while (num > 0) {
+        let k = num % 10;
+        num = Math.floor(num / 10);
+        arr.push(k);
+    }
+    let n = arr.length;
+
+    for (var i = 0; i < n; i++) {
+        if (hash.has(arr[i]))
+            hash.set(arr[i], hash.get(arr[i]) + 1)
+        else
+            hash.set(arr[i], 1)
+    }
+
+
+    var max_count = 0, res = -1;
+    hash.forEach((value, key) => {
+
+        if (max_count < value) {
+            res = key;
+            max_count = value;
+        }
+
+    });
+
+    return max_count;
+}
+
 
 
 
@@ -79,17 +134,65 @@ app.post('/hello', upload.array('file'), async (req, res, next) => {
     const filteredArray = await old_data.filter(value => new_data.includes(value));
     let difference = await new_data.filter(x => !filteredArray.includes(x));
 
-    // let l1 = old_data.length;
-    // let l2 = new_data.length;
-
-    // console.log(l1, l2)
-    // console.log(difference);
-
-    // let arr = myarr1.concat(myarr2);
-
     res.send(difference);
 
 })
+
+
+app.post('/vip', upload.array('file'), async (req, res, next) => {
+
+    console.log('i got req')
+
+    console.log(req.files);
+
+    if (req.files === [] || req.files.length < 1) {
+        res.sendStatus(450);
+        return;
+    }
+
+    let data = []
+
+    let a = await req.files[0].buffer.toString();
+
+    let c = await a.split('\n');
+    let nine = [];
+    let mxthree = [];
+    let mxfreq = [];
+
+
+    for await (let d of c) {
+        let appu = await d.split(',');
+        let num = await appu[0];
+        let t = parseInt(num);
+
+        let ans1 = await sumDigit(t);
+        let ans2 = await maximumDigits(t);
+        let ans3 = await maximumFreq(t);
+
+        if (ans1 === 9) {
+            nine.push(t);
+        }
+
+        if (ans2 <= 3) {
+            mxthree.push(t);
+
+        }
+
+        if (ans3 >= 6) {
+            mxfreq.push(t);
+        }
+
+    }
+
+    data.push(nine);
+    data.push(mxthree);
+    data.push(mxfreq);
+
+
+    res.send(data);
+
+})
+
 
 app.get('/', (req, res) => {
     res.send("ojk");
