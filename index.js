@@ -9,8 +9,16 @@ var upload = multer({ dest: 'uploads/' })
 const csv = require('csv-parser');
 const cors = require('cors');
 
+// const staticPath = path.join(__dirname, '/front-end/build');
+// console.log(staticPath)
+// app.use(express.static(staticPath));
+
+
+
 app.use(cors());
 app.options('*', cors())
+
+
 
 // app.use(function (req, res, next) {
 //     res.header("Access-Control-Allow-Origin", "*");
@@ -19,22 +27,20 @@ app.options('*', cors())
 // })
 
 
-app.post('/hello', upload.array('file'), async (req, res) => {
-    // console.log(req.files);
+app.post('/hello', upload.array('file'), async (req, res, next) => {
+    console.log('i got req')
+    console.log(req.files);
     if (req.files === [] || req.files.length < 2) {
         res.sendStatus(450);
         return;
     }
     let old_data = [];
     let new_data = [];
-    try {
-        var csvPipe1 = await fs.createReadStream(req.files[0].path).pipe(csv());
-        var csvPipe2 = await fs.createReadStream(req.files[1].path).pipe(csv());
-    }
-    catch (e) {
-        res.send("please upload csv files");
-        return;
-    }
+
+    var csvPipe1 = await fs.createReadStream(req.files[0].path).pipe(csv());
+    var csvPipe2 = await fs.createReadStream(req.files[1].path).pipe(csv());
+
+
 
     for await (let row of csvPipe1) {
         await old_data.push(row["Cell Number"]);
@@ -48,10 +54,11 @@ app.post('/hello', upload.array('file'), async (req, res) => {
     const filteredArray = await old_data.filter(value => new_data.includes(value));
     let difference = await new_data.filter(x => !filteredArray.includes(x));
 
-    let l1 = old_data.length;
-    let l2 = new_data.length;
+    // let l1 = old_data.length;
+    // let l2 = new_data.length;
 
     // console.log(l1, l2)
+    // console.log(difference);
 
     // let arr = myarr1.concat(myarr2);
 
@@ -63,6 +70,17 @@ app.get('/', (req, res) => {
     res.send("ojk");
 })
 
+// if (process.env.PRODUCTION === "production") {
+//     app.use(express.static("front-end/build"))
+//     app.get("*", (req, res) => {
+//         res.sendFile(path.resolve(__dirname, 'front-end', 'build', 'index.html'));
+//     })
+// }
+
 app.listen(port, () => {
-    // console.log('app running server started');
+    console.log('app running server started');
 })
+
+
+
+
