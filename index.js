@@ -20,10 +20,17 @@ app.options('*', cors());
 
 
 const sumDigit = async (num, sum = 0) => {
-    if (num) {
-        return await sumDigit(Math.floor(num / 10), sum + (num % 10));
+
+    var resad = 0;
+    while (num > 0) {
+        let k = num % 10;
+        resad += k;
+        num = Math.floor(num / 10);
+
     }
-    return await sum;
+
+    return resad
+
 };
 
 const maximumDigits = async (num) => {
@@ -198,7 +205,7 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
 
         }
 
-        if (ans3 >= 6) {
+        if (ans3 >= 7) {
             mxfreq.push(t);
         }
 
