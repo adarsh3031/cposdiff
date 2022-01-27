@@ -16,7 +16,7 @@ function App() {
 
 
   const [data, setData] = useState(["hello data will be shown here"]);
-  const [vip, setVip] = useState([['find vips']]);
+  const [vip, setVip] = useState([['find vips'], ['h'], ['h']]);
 
 
   const onChange1 = (e) => {
@@ -76,7 +76,7 @@ function App() {
     catch (e) {
       setLoading(0);
       console.log(e);
-      let abcd = ['files sahi se upload karo bhaiya'];
+      let abcd = [['files sahi se upload karo bhaiya'], ["f"], ["d"]];
 
       setVip(abcd);
       return;
@@ -349,23 +349,6 @@ function App() {
 
 
       </div>
-
-
-
-
-
-
-
-
-
-
-      {/*
-      <input type="file" name="file" onChange={onChange1} require />
-      <input type="file" name="file" onChange={onChange2} require />
-      <input type="submit" onClick={submitForm} /> */}
-
-
-
 
 
 

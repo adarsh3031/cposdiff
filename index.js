@@ -87,8 +87,20 @@ app.post('/hello', upload.array('file'), async (req, res, next) => {
     let old_data = [];
     let new_data = [];
 
-    let a = await req.files[0].buffer.toString();
-    let b = await req.files[1].buffer.toString();
+    try {
+
+        var a = await req.files[0].buffer.toString();
+        var b = await req.files[1].buffer.toString();
+
+    }
+    catch (e) {
+        res.sendStatus(450);
+        return;
+    }
+
+
+
+
     let c = await a.split('\n');
     let c2 = await b.split('\n');
 
@@ -151,10 +163,18 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
     }
 
     let data = []
+    try {
+        var a1 = await req.files[0].buffer.toString();
 
-    let a = await req.files[0].buffer.toString();
+    }
+    catch (e) {
+        res.sendStatus(450);
+        return;
+    }
 
-    let c = await a.split('\n');
+
+
+    let c = await a1.split('\n');
     let nine = [];
     let mxthree = [];
     let mxfreq = [];
