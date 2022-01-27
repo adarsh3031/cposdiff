@@ -16,7 +16,7 @@ function App() {
 
 
   const [data, setData] = useState(["hello data will be shown here"]);
-  const [vip, setVip] = useState([['find vips'], ['h'], ['h']]);
+  const [vip, setVip] = useState([['find vips'], ['h'], ['h'], ["h"], ["j"]]);
 
 
   const onChange1 = (e) => {
@@ -76,7 +76,7 @@ function App() {
     catch (e) {
       setLoading(0);
       console.log(e);
-      let abcd = [['files sahi se upload karo bhaiya'], ["f"], ["d"]];
+      let abcd = [['files sahi se upload karo bhaiya'], ["f"], ["d"], , ["f"], ["d"]];
 
       setVip(abcd);
       return;
@@ -101,7 +101,7 @@ function App() {
     <div className="">
 
 
-      <div className="flex justify-around">
+      <div className="">
 
 
         <div>
@@ -293,8 +293,10 @@ function App() {
                       </ul>
 
 
+
+
                       <ul class="divide-y-2 divide-gray-500">
-                        Only 3 digits
+                        Only 2 digits
                         {vip[1].map(h => (
                           <div>
 
@@ -311,10 +313,46 @@ function App() {
 
 
                       <ul class="divide-y-2 divide-gray-500">
-
-                        >6 times repeat
-
+                        Only 3 digits
                         {vip[2].map(h => (
+                          <div>
+
+                            <tr>
+                              <li class="p-3 hover:bg-blue-600 hover:text-blue-200">
+                                {h}
+                              </li>
+
+                            </tr>
+
+                          </div>
+                        ))}
+                      </ul>
+
+
+                      <ul class="divide-y-2 divide-gray-500">
+
+                        6 times repeat
+
+                        {vip[3].map(h => (
+                          <div>
+
+                            <tr>
+                              <li class="p-3 hover:bg-blue-600 hover:text-blue-200">
+                                {h}
+                              </li>
+
+                            </tr>
+
+                          </div>
+                        ))}
+                      </ul>
+
+
+                      <ul class="divide-y-2 divide-gray-500">
+
+                        7 times repeat
+
+                        {vip[4].map(h => (
                           <div>
 
                             <tr>

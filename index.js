@@ -29,6 +29,7 @@ const sumDigit = async (num, sum = 0) => {
 
     }
 
+
     return resad
 
 };
@@ -184,7 +185,9 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
     let c = await a1.split('\n');
     let nine = [];
     let mxthree = [];
-    let mxfreq = [];
+    let mxtwo = [];
+    let mxfreq6 = [];
+    let mxfreq7 = []
 
 
     for await (let d of c) {
@@ -196,24 +199,37 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
         let ans2 = await maximumDigits(t);
         let ans3 = await maximumFreq(t);
 
-        if (ans1 === 9) {
+        if ((ans1 % 9) === 0) {
             nine.push(t);
         }
 
-        if (ans2 <= 3) {
+        if (ans2 <= 2) {
+            mxtwo.push(t);
+
+        }
+
+        if (ans2 === 3) {
             mxthree.push(t);
 
         }
 
-        if (ans3 >= 7) {
-            mxfreq.push(t);
+        if (ans3 >= 6) {
+            mxfreq6.push(t);
         }
+
+        if (ans3 >= 7) {
+            mxfreq7.push(t);
+        }
+
+
 
     }
 
     data.push(nine);
+    data.push(mxtwo)
     data.push(mxthree);
-    data.push(mxfreq);
+    data.push(mxfreq6);
+    data.push(mxfreq7);
 
 
     res.send(data);
