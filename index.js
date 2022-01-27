@@ -9,9 +9,9 @@ var upload = multer({ dest: 'uploads/' })
 const csv = require('csv-parser');
 const cors = require('cors');
 
-// const staticPath = path.join(__dirname, '/front-end/build');
-// console.log(staticPath)
-// app.use(express.static(staticPath));
+const staticPath = path.join(__dirname, '/front-end/build');
+console.log(staticPath)
+app.use(express.static(staticPath));
 
 
 
@@ -70,12 +70,12 @@ app.get('/', (req, res) => {
     res.send("ojk");
 })
 
-// if (process.env.PRODUCTION === "production") {
-//     app.use(express.static("front-end/build"))
-//     app.get("*", (req, res) => {
-//         res.sendFile(path.resolve(__dirname, 'front-end', 'build', 'index.html'));
-//     })
-// }
+if (process.env.PRODUCTION === "production") {
+    app.use(express.static("front-end/build"))
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'front-end', 'build', 'index.html'));
+    })
+}
 
 app.listen(port, () => {
     console.log('app running server started');
