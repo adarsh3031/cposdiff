@@ -173,10 +173,10 @@ const findPattern = (num) => {
         obj.ab_zxxx_zaaa = false;
     }
 
-    if (str[2] === str[6] && str[3] === str[7] && str[4] === str[5] && str[5] === str[8] && str[8] === str[9]) {
+    if (str[2] === str[6] && str[3] === str[7] && str[4] === str[5] && str[5] === str[8] && str[8] === str[9] && str[9] === '0') {
         obj.xy00_xy00 = true;
     }
-    else if (str[0] === str[4] && str[1] === str[5] && str[2] === str[3] && str[3] === str[6] && str[6] === str[7]) {
+    else if (str[0] === str[4] && str[1] === str[5] && str[2] === str[3] && str[3] === str[6] && str[6] === str[7] && str[7] === '0') {
         obj.xy00_xy00 = true;
     }
     else {
@@ -185,20 +185,20 @@ const findPattern = (num) => {
 
 
 
-    if (str[2] === str[6] && (parseInt(str[3]) === parseInt(str[7]) + 1) && str[4] === str[5] && str[5] === str[8] && str[8] === str[9]) {
+    if (str[2] === str[6] && (parseInt(str[3]) === parseInt(str[7]) + 1) && str[4] === str[5] && str[5] === str[8] && str[8] === str[9] && str[9] === '0') {
         obj.xy00_xa00 = true;
     }
-    else if (str[0] === str[4] && (parseInt(str[1]) === parseInt(str[5]) + 1) && str[2] === str[3] && str[3] === str[6] && str[6] === str[7]) {
+    else if (str[0] === str[4] && (parseInt(str[1]) === parseInt(str[5]) + 1) && str[2] === str[3] && str[3] === str[6] && str[6] === str[7] && str[7] === '0') {
         obj.xy00_xa00 = true;
     }
     else {
         obj.xy00_xa00 = false;
     }
 
-    if (str[2] === str[6] && (parseInt(str[3]) + 1 === parseInt(str[7])) && str[4] === str[5] && str[5] === str[8] && str[8] === str[9]) {
+    if (str[2] === str[6] && (parseInt(str[3]) + 1 === parseInt(str[7])) && str[4] === str[5] && str[5] === str[8] && str[8] === str[9] && str[9] === '0') {
         obj.xy00_xb00 = true;
     }
-    else if (str[0] === str[4] && (parseInt(str[1]) + 1 === parseInt(str[5])) && str[2] === str[3] && str[3] === str[6] && str[6] === str[7]) {
+    else if (str[0] === str[4] && (parseInt(str[1]) + 1 === parseInt(str[5])) && str[2] === str[3] && str[3] === str[6] && str[6] === str[7] && str[7] === '0') {
         obj.xy00_xb00 = true;
     }
     else {
