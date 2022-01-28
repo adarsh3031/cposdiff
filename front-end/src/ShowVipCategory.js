@@ -1,16 +1,32 @@
 import React from 'react';
 
-export default function ShowVipCategory({ arrcateg, index }) {
+export default function ShowVipCategory({ arrcateg, index, curr_window }) {
 
-    const category_name = ["2 Digits", "7 times", "Sum 9", "3 Digits", "6 times", "ABCD-X-ABCD-Y", "XY-ABBA-ABBA", "ABCC-X-ABCC-Y", "ABC-XX-ABC-YY", "XY=A0B0C0D0", "XY-ABAB-CDCD", "ABC-ABC-WXYZ"];
-    const colors = ["red-400", "blue-300", "green-300", "pink-400", "yellow-500"]
+    const category_name = ["Super-Vip", "Sum 9", "3 Digits", "6 times", "ABCD-X-ABCD-Y", "XY-ABBA-ABBA", "ABCC-X-ABCC-Y", "ABC-XX-ABC-YY", "XY=A0B0C0D0", "XY-ABAB-CDCD", "ABC-ABC-WXYZ"];
+    const colors = ["red-400", "blue-300", "green-300", "pink-400", "yellow-500"];
 
+
+
+
+
+
+
+    // if (index === 1) { console.log(arrcateg, index) };
 
 
     return (
-        <div className="w-full  rounded-lg shadow-lg lg:w-1/12">
 
-            <ul class="divide-y-2  ">
+
+        <div className={`w-full   rounded-lg shadow-lg lg:w-1/12`}
+
+        >
+
+
+
+
+
+
+            <ul className="divide-y-2   ">
 
                 {index == 0 || index == 1
 
@@ -20,6 +36,7 @@ export default function ShowVipCategory({ arrcateg, index }) {
 
                         {category_name[index]}
                     </div>
+
 
                     :
 
@@ -49,5 +66,8 @@ export default function ShowVipCategory({ arrcateg, index }) {
         </div>
 
 
+
     )
+
+
 };

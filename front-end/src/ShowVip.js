@@ -6,6 +6,14 @@ import axios from 'axios';
 
 export default function ShowVip() {
 
+    const category_name = ["Super-Vip", "Sum 9", "3 Digits", "6 times", "ABCD-X-ABCD-Y", "XY-ABBA-ABBA", "ABCC-X-ABCC-Y", "ABC-XX-ABC-YY", "XY=A0B0C0D0", "XY-ABAB-CDCD", "ABC-ABC-WXYZ"];
+    const colors = ["red-400", "blue-300", "green-300", "pink-400", "yellow-500"];
+
+    const [curr_window, setWindow] = useState('');
+
+
+
+
 
 
 
@@ -23,6 +31,7 @@ export default function ShowVip() {
 
     const submitForm2 = async () => {
         let url = '/vip';
+        // const url = 'http://localhost:8000/vip'
         setLoading(1);
         try {
             var answer = await axios.post(url, formData2);
@@ -124,12 +133,20 @@ export default function ShowVip() {
                         :
 
 
-                        <div className="flex justify-center">
-                            {vip.map((h, index) => (
-                                <ShowVipCategory arrcateg={h} index={index} />
+                        <div className="flex justify-start">
+
+
+
+
+
+                            {vip.map((item, index) => (
+                                <ShowVipCategory arrcateg={item} index={index}
+                                />
+
+
+
                             ))}
                         </div>
-
 
 
 
