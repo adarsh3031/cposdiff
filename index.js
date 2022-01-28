@@ -81,6 +81,74 @@ const maximumFreq = async (num) => {
 }
 
 
+const findPattern = (num) => {
+    let str = num.toString();
+
+    if (str.length < 10) {
+        return null;
+    }
+    let obj = {};
+
+    if (str[0] === str[5] && str[1] === str[6] && str[2] === str[7] && str[3] === str[8]) {
+        obj.abcd_x_abcd_y = true;
+    }
+    else {
+        obj.abcd_x_abcd_y = false;
+    }
+
+    if (str[2] === str[6] && str[3] === str[7] && str[4] === str[8] && str[5] === str[9] && str[3] === str[4]) {
+        obj.xy_abba_abba = true;
+    }
+    else {
+        obj.xy_abba_abba = false;
+    }
+
+    if (str[0] === str[5] && str[1] === str[6] && str[2] === str[7] && str[3] === str[8] && str[2] === str[3]) {
+        obj.abcc_x_abcc_y = true;
+    }
+    else {
+        obj.abcc_x_abcc_y = false;
+    }
+
+    if (str[0] === str[5] && str[1] === str[6] && str[2] === str[7] && str[3] === str[4] && str[8] === str[9]) {
+        obj.abc_xx_abc__yy = true;
+    }
+    else {
+        obj.abc_xx_abc__yy = false;
+    }
+
+    if (str[3] === '0' && str[5] === '0' && str[7] === '0' && str[9] === '0') {
+        obj.xy_a0_b0_c0_d0 = true;
+    }
+    else {
+        obj.xy_a0_b0_c0_d0 = false;
+    }
+
+    if (str[2] === str[4] && str[3] === str[5] && str[6] === str[8] && str[7] === str[9]) {
+        obj.xy_abab_cdcd = true;
+    }
+    else {
+        obj.xy_abab_cdcd = false;
+    }
+
+    if (str[0] === str[3] && str[1] === str[4] && str[2] === str[5]) {
+        obj.abc_abc_wxyz = true;
+    }
+    else {
+        obj.abc_abc_wxyz = false;
+    }
+
+    return obj;
+
+
+
+
+
+
+
+}
+
+
 
 
 
@@ -187,7 +255,16 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
     let mxthree = [];
     let mxtwo = [];
     let mxfreq6 = [];
-    let mxfreq7 = []
+    let mxfreq7 = [];
+    let abcd_x_abcd_y = [];
+    let xy_abba_abba = [];
+    let abcc_x_abcc_y = [];
+    let abc_xx_abc_yy = [];
+    let xy_a0_b0_c0_d0 = [];
+    let xy_abab_cdcd = [];
+    let abc_abc_wxyz = [];
+
+
 
 
     for await (let d of c) {
@@ -198,6 +275,7 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
         let ans1 = await sumDigit(t);
         let ans2 = await maximumDigits(t);
         let ans3 = await maximumFreq(t);
+        let pattern = await findPattern(t);
 
         if ((ans1 % 9) === 0) {
             nine.push(t);
@@ -221,15 +299,61 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
             mxfreq7.push(t);
         }
 
+        if (pattern !== null) {
+
+            if (pattern.abcd_x_abcd_y) {
+                abcd_x_abcd_y.push(t);
+            }
+
+            if (pattern.xy_abba_abba) {
+                xy_abba_abba.push(t);
+            }
+
+            if (pattern.abcc_x_abcc_y) {
+                abcc_x_abcc_y.push(t);
+            }
+
+            if (pattern.abc_xx_abc__yy) {
+                abc_xx_abc_yy.push(t);
+            }
+
+
+            if (pattern.xy_a0_b0_c0_d0) {
+                xy_a0_b0_c0_d0.push(t);
+            }
+
+            if (pattern.xy_abab_cdcd) {
+                xy_abab_cdcd.push(t);
+            }
+
+            if (pattern.abc_abc_wxyz) {
+                abc_abc_wxyz.push(t);
+            }
+
+
+        }
+
+
 
 
     }
 
-    data.push(nine);
+
     data.push(mxtwo)
+    data.push(mxfreq7);
+
+    data.push(nine);
+
     data.push(mxthree);
     data.push(mxfreq6);
-    data.push(mxfreq7);
+
+    data.push(abcd_x_abcd_y);
+    data.push(xy_abba_abba);
+    data.push(abcc_x_abcc_y);
+    data.push(abc_xx_abc_yy);
+    data.push(xy_a0_b0_c0_d0);
+    data.push(xy_abab_cdcd);
+    data.push(abc_abc_wxyz);
 
 
     res.send(data);
