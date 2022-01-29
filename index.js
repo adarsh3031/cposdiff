@@ -88,6 +88,7 @@ const findPattern = (num) => {
         return null;
     }
     let obj = {};
+    obj.xxxx = false;
 
     if (str[0] === str[5] && str[1] === str[6] && str[2] === str[7] && str[3] === str[8]) {
         obj.abcd_x_abcd_y = true;
@@ -223,6 +224,37 @@ const findPattern = (num) => {
         obj.xyxy_yxyx = false;
     }
 
+    for (let i = 0; i <= 6; i++) {
+
+        if (str[i] === str[i + 1] && str[i + 1] === str[i + 2] && str[i + 2] === str[i + 3]) {
+            obj.xxxx = true;
+        }
+    }
+
+    if (str[2] === str[6] && str[3] === str[7] && str[4] === str[8] && str[5] === str[9]) {
+        obj.abcd_abcd = true;
+    }
+    else {
+        obj.abcd_abcd = false;
+    }
+
+    if (str[2] === str[5] && str[3] === '0' && str[4] === '0' && str[7] === '0' && str[8] === '0' && str[6] === str[9]) {
+        obj.x00x_y00y = true;
+    }
+    else {
+        obj.x00x_y00y = false;
+    }
+
+
+    if (str[2] === str[6] && str[3] === '0' && str[4] === '0' && str[4] === str[8] && str[7] === '0' && str[8] === '0' && str[5] === str[9]) {
+        obj.x00y_x00y = true;
+    }
+    else {
+        obj.x00y_x00y = false;
+    }
+
+
+
 
 
 
@@ -354,6 +386,9 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
     let xy_a0_b0_c0_d0 = [];
     let xy_abab_cdcd = [];
     let abc_abc_wxyz = [];
+    let xxxx = [];
+    let abcd_abcd = [];
+    let x00x_y00y = [];
 
     let super_vip = [];
 
@@ -443,8 +478,20 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
                 super_vip.push(t);
             }
 
-            if (pattern.xy00_xb00 || pattern.xy00_xa00 || pattern.xxx_z_xxx || pattern.ab_xy_xy_ab_ab || pattern.ab_xy_ab_xy_xy || pattern.ab_zxxx_zaaa || pattern.xy00_xy00 || pattern.xyxy_yxyx || pattern.xxxxyxx) {
+            if (pattern.xy00_xb00 || pattern.xy00_xa00 || pattern.xxx_z_xxx || pattern.ab_xy_xy_ab_ab || pattern.ab_xy_ab_xy_xy || pattern.ab_zxxx_zaaa || pattern.xy00_xy00 || pattern.xyxy_yxyx || pattern.xxxxyxx || pattern.x00y_x00y) {
                 super_vip.push(t);
+            }
+
+            if (pattern.xxxx) {
+                xxxx.push(t);
+            }
+
+            if (pattern.abcd_abcd) {
+                abcd_abcd.push(t);
+            }
+
+            if (pattern.x00x_y00y) {
+                x00x_y00y.push(t);
             }
 
 
@@ -459,6 +506,11 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
 
 
     data.push(super_vip);
+
+
+    data.push(xxxx);
+    data.push(x00x_y00y);
+    data.push(abcd_abcd);
 
     data.push(nine);
 
