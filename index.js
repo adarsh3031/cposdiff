@@ -81,6 +81,21 @@ const maximumFreq = async (num) => {
 }
 
 
+const isPalindrome = (num) => {
+    let str = num.toString();
+    if (str.length < 10) {
+        return 0;
+    }
+
+    if (str[9] === str[0] && str[8] === str[1] && str[7] === str[2] && str[6] === str[3] && str[5] === str[4] && str[4] === str[5]) {
+        return 1;
+    }
+
+    return 0;
+
+}
+
+
 const findPattern = (num) => {
     let str = num.toString();
 
@@ -89,6 +104,7 @@ const findPattern = (num) => {
     }
     let obj = {};
     obj.xxxx = false;
+    obj.ab_xyxy_xzxz = false;
 
     if (str[0] === str[5] && str[1] === str[6] && str[2] === str[7] && str[3] === str[8]) {
         obj.abcd_x_abcd_y = true;
@@ -260,6 +276,35 @@ const findPattern = (num) => {
         obj.ab_xxx_cd_xxx = false;
     }
 
+    if (str[2] === str[4] && str[4] === str[6] && str[6] === str[8] && str[3] === str[7] && str[5] === str[9] && parseInt(str[5]) === parseInt(str[3]) + 1) {
+        obj.ab_xyxz_xyxz = true;
+    }
+    else {
+        obj.ab_xyxz_xyxz = false;
+    }
+
+    if (str[2] === str[6] && str[3] === str[7] && str[4] === str[8] && str[5] === str[9] && parseInt(str.substring(2, 4)) === parseInt(str.substring(4, 6)) - 1) {
+        obj.ab_xyxz_xyxz = true;
+    }
+    else {
+        obj.ab_xyxz_xyxz = false;
+    }
+
+    if (str.substring(2, 4) === str.substring(4, 6) && str.substring(6, 8) === str.substring(8, 10) && parseInt(str.substring(4, 6)) === parseInt(str.substring(8, 10)) - 1) {
+        obj.ab_xyxy_xzxz = true;
+    }
+    else if (str.substring(2, 4) === str.substring(4, 6) && str.substring(6, 8) === str.substring(8, 10) && parseInt(str.substring(4, 6)) === parseInt(str.substring(8, 10)) + 1) {
+        obj.ab_xyxy_xzxz = true;
+    }
+
+    if (str[4] === str[7] && str[5] === str[8] && str[6] === str[9]) {
+        obj.abcd_xyz_xyz = true;
+    }
+    else {
+        obj.abcd_xyz_xyz = false;
+    }
+
+
 
 
 
@@ -396,6 +441,7 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
     let xxxx = [];
     let abcd_abcd = [];
     let x00x_y00y = [];
+    let abcd_xyz_xyz = [];
 
     let super_vip = [];
 
@@ -485,7 +531,7 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
                 super_vip.push(t);
             }
 
-            if (pattern.xy00_xb00 || pattern.xy00_xa00 || pattern.xxx_z_xxx || pattern.ab_xy_xy_ab_ab || pattern.ab_xy_ab_xy_xy || pattern.ab_zxxx_zaaa || pattern.xy00_xy00 || pattern.xyxy_yxyx || pattern.xxxxyxx || pattern.x00y_x00y || pattern.ab_xxx_cd_xxx) {
+            if (pattern.xy00_xb00 || pattern.xy00_xa00 || pattern.xxx_z_xxx || pattern.ab_xy_xy_ab_ab || pattern.ab_xy_ab_xy_xy || pattern.ab_zxxx_zaaa || pattern.xy00_xy00 || pattern.xyxy_yxyx || pattern.xxxxyxx || pattern.x00y_x00y || pattern.ab_xxx_cd_xxx || isPalindrome(t) || pattern.ab_xyxz_xyxz || pattern.ab_xyxy_xzxz) {
                 super_vip.push(t);
             }
 
@@ -499,6 +545,10 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
 
             if (pattern.x00x_y00y) {
                 x00x_y00y.push(t);
+            }
+
+            if (pattern.abcd_xyz_xyz) {
+                abcd_xyz_xyz.push(t);
             }
 
 
@@ -531,6 +581,7 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
     data.push(xy_a0_b0_c0_d0);
     data.push(xy_abab_cdcd);
     data.push(abc_abc_wxyz);
+    data.push(abcd_xyz_xyz)
 
 
     res.send(data);
