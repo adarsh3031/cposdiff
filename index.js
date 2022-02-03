@@ -561,6 +561,23 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
 
     }
 
+    await super_vip.sort();
+    await xxxx.sort();
+    await x00x_y00y.sort();
+    await abcd_abcd.sort();
+    await nine.sort();
+    await mxthree.sort();
+    await mxfreq6.sort();
+    await abcd_x_abcd_y.sort();
+    await xy_abba_abba.sort();
+    await abcc_x_abcc_y.sort();
+    await abc_xx_abc_yy.sort();
+    await xy_a0_b0_c0_d0.sort();
+    await xy_abab_cdcd.sort();
+    await abc_abc_wxyz.sort();
+    await abcd_xyz_xyz.sort();
+
+
 
     data.push(super_vip);
 
