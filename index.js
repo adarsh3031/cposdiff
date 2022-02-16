@@ -304,21 +304,53 @@ const findPattern = (num) => {
         obj.abcd_xyz_xyz = false;
     }
 
-
-
-
-
-
-
-
-
-
     return obj;
 
+}
+
+const isNewCateg1 = (num) => {
+    let s = num.toString();
+
+    if (s[9] === s[7] && s[8] === s[6] && s[5] === s[4] === s[4] === s[3] && s[3] === '0') {
+        return true;
+    }
+
+    if (s[0] === s[8] && s[1] === s[9] && s[2] == s[5] && s[3] === s[6]) {
+        return true;
+    }
+
+    if (s.substring(0, 3) === s.substring(7, 10) && s[3] === s[4] && s[4] === s[5] && s[5] === s[6]) {
+        return true;
+    }
+
+    if (s[2] === s[4] && s[3] === s[5] && s[4] === s[6] && s[5] === s[7]) {
+        return true;
+    }
+
+    if (s.substring(0, 5) === s.substring(5, 10)) {
+        return true;
+    }
+
+    let str = s.substring(4, 10);
 
 
+    let endswith = ['001313', '000420', '000143', '000786', '009211', '123123', '143143', '302302', '786786', '420420', '101101', '100100', '313313', '501501', '108108', '214214', '306090', '102030', '008055', '010203', '307307', '111111', '222222', '333333', '444444', '123456', '555555', '666666', '777777', '888888', '999999', '420786', '143786'];
 
+    let random = ['420420', '143143', '0001313', '123123', '786786', '92119211'];
 
+    for (const nnnn of endswith) {
+        if (str === nnnn) {
+            return true;
+        }
+    }
+
+    for (const nnnnn of random) {
+        if (s.search(nnnnn) !== -1) {
+            return true;
+        }
+    }
+
+    return false;
 
 
 }
@@ -444,6 +476,7 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
     let abcd_xyz_xyz = [];
 
     let super_vip = [];
+    let new_categ1 = [];
 
 
 
@@ -552,7 +585,9 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
             }
 
 
-
+            if (isNewCateg1(t) === true) {
+                new_categ1.push(t)
+            }
 
         }
 
@@ -576,6 +611,7 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
     await xy_abab_cdcd.sort();
     await abc_abc_wxyz.sort();
     await abcd_xyz_xyz.sort();
+    await new_categ1.sort();
 
 
 
@@ -598,7 +634,8 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
     data.push(xy_a0_b0_c0_d0);
     data.push(xy_abab_cdcd);
     data.push(abc_abc_wxyz);
-    data.push(abcd_xyz_xyz)
+    data.push(abcd_xyz_xyz);
+    data.push(new_categ1);
 
 
     res.send(data);
