@@ -311,15 +311,16 @@ const findPattern = (num) => {
 const isNewCateg1 = (num) => {
     let s = num.toString();
 
-    if (s[9] === s[7] && s[8] === s[6] && s[5] === s[4] === s[4] === s[3] && s[3] === '0') {
+    if (s[9] === s[7] && s[8] === s[6] && s[5] === s[4] && s[4] === s[3] && s[3] === '0') {
         return true;
     }
 
-    if (s[0] === s[8] && s[1] === s[9] && s[2] == s[5] && s[3] === s[6]) {
+    if (s.substring(0, 3) === s.substring(7, 10) && str[3] === str[4] && str[5] === str[4] && str[5] === str[6]) {
         return true;
+
     }
 
-    if (s.substring(0, 3) === s.substring(7, 10) && s[3] === s[4] && s[4] === s[5] && s[5] === s[6]) {
+    if (s.substring(0, 2) === s.substring(8, 10) && s.substring(2, 5) === s.substring(5, 8)) {
         return true;
     }
 
