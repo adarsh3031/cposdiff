@@ -14,10 +14,6 @@ export default function ShowVip() {
 
 
 
-
-
-
-
     const formData2 = new FormData();
 
     const [vip, setVip] = useState(0);

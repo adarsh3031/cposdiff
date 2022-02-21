@@ -1,6 +1,7 @@
 import React from "react";
 import Diff from "./Diff";
 import ShowVip from "./ShowVip"
+import SearchPattern from "./SearchPattern"
 
 const Tabs = ({ color }) => {
     const [openTab, setOpenTab] = React.useState(1);
@@ -66,7 +67,7 @@ const Tabs = ({ color }) => {
                                 href="#link3"
                                 role="tablist"
                             >
-                                Options
+                                Search Pattern
                             </a>
                         </li>
                     </ul>
@@ -82,7 +83,7 @@ const Tabs = ({ color }) => {
 
                                 </div>
                                 <div className={openTab === 3 ? "block" : "hidden"} id="link3">
-                                    Will Add some other features if wanted
+                                    <SearchPattern></SearchPattern>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +97,7 @@ const Tabs = ({ color }) => {
 export default function TabsRender() {
     return (
         <>
-            <Tabs color="gray" />;
+            <Tabs color="gray" />
         </>
     );
 }

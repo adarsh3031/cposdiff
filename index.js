@@ -443,6 +443,43 @@ app.post('/hello', upload.array('file'), async (req, res, next) => {
 
 })
 
+app.post('/pattern', upload.array('file'), async (req, res, next) => {
+
+
+
+    if (req.files === [] || req.files.length < 1) {
+        console.log(' i  am parent eror')
+        res.sendStatus(450);
+        return;
+    }
+
+    let allnumbers = [];
+
+    try {
+        var a3 = await req.files[0].buffer.toString();
+
+    }
+    catch (e) {
+        console.log('i am here')
+        res.sendStatus(450);
+        return;
+    }
+
+    let c = await a3.split('\n');
+
+    for await (let d of c) {
+        let appu = await d.split(',');
+        let num = await appu[0];
+        let t = parseInt(num);
+        allnumbers.push(t);
+
+    }
+
+    await allnumbers.sort();
+
+    res.send(allnumbers);
+})
+
 
 app.post('/vip', upload.array('file'), async (req, res, next) => {
 
