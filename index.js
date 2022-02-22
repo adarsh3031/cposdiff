@@ -36,6 +36,11 @@ let json_data2 = {
     ]
 }
 
+let json_data3 = {
+    "name": "Shivam P1",
+    "email": "summerprojects7781@gmail.com"
+}
+
 
 const sumDigit = async (num, sum = 0) => {
 
@@ -390,6 +395,10 @@ app.get('/data1', (req, res) => {
 
 app.get('/data2', (req, res) => {
     res.send(json_data2);
+})
+
+app.get('/data3', (req, res) => {
+    res.send(json_data3);
 })
 
 
