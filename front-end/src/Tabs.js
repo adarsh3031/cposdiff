@@ -2,6 +2,7 @@ import React from "react";
 import Diff from "./Diff";
 import ShowVip from "./ShowVip"
 import SearchPattern from "./SearchPattern"
+import SearchDesign from "./SearchDesign"
 
 const Tabs = ({ color }) => {
     const [openTab, setOpenTab] = React.useState(1);
@@ -67,8 +68,10 @@ const Tabs = ({ color }) => {
                                 href="#link3"
                                 role="tablist"
                             >
-                                Search Pattern
+                                Search Super Pattern
                             </a>
+
+
                         </li>
                     </ul>
                     <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
@@ -82,8 +85,12 @@ const Tabs = ({ color }) => {
                                     <ShowVip></ShowVip>
 
                                 </div>
-                                <div className={openTab === 3 ? "block" : "hidden"} id="link3">
+                                {/* <div className={openTab === 3 ? "block" : "hidden"} id="link3">
                                     <SearchPattern></SearchPattern>
+                                </div> */}
+
+                                <div className={openTab === 3 ? "block" : "hidden"} id="link3">
+                                    <SearchDesign></SearchDesign>
                                 </div>
                             </div>
                         </div>

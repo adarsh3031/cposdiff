@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 
-const SearchPattern = () => {
+const SearchDesign = () => {
+
+    const allEqual = async (arr) => arr.every(v => v === arr[0])
     let [search, setSearch] = useState('');
     let [result, setResult] = useState('');
     let [filter, setFilter] = useState(0);
+    let [patternObj, setPatternObj] = useState({});
 
     let [finalOutput, setFinalOutput] = useState([]);
 
@@ -21,7 +24,35 @@ const SearchPattern = () => {
 
     const onChange2 = (e) => {
 
+        console.log(e.target.value)
+
+
+
         setSearch(e.target.value);
+
+        let s = e.target.value;
+
+        if (s !== undefined && s !== null && s.length === 10) {
+
+            let Obj = {};
+
+            for (let i = 0; i < 10; i++) {
+                if (Obj[s[i]] === undefined) {
+                    Obj[s[i]] = [];
+                }
+                Obj[s[i]].push(i);
+            }
+
+            setPatternObj(Obj);
+            console.log(Obj);
+
+        }
+
+
+
+
+
+
 
     }
 
@@ -33,7 +64,7 @@ const SearchPattern = () => {
 
         try {
             var answer = await axios.post(url, formData);
-            // console.log(answer);
+            await setResult(answer.data);
             if (answer) {
                 setLoading(0);
             }
@@ -47,15 +78,8 @@ const SearchPattern = () => {
             return;
         }
 
-        setResult(answer.data);
 
-
-
-
-
-        console.log(answer, "i am response");
-        console.log(result, "i am result")
-
+        console.log(answer.data, "i am response");
         formData.delete('file');
 
     }
@@ -64,28 +88,36 @@ const SearchPattern = () => {
     const searchPattern = async () => {
 
 
+
         let myarr = [];
         for await (let d of result) {
-            if (d !== null && d !== undefined) {
-                let str1 = d.toString();
-                let flag = 1;
-                if (str1.length === 10 && search.length === 10) {
-                    let index = 0;
-                    for await (let i of search) {
-                        if (i === '1' || i === '2' || i === '3' || i === '4' || i === '5' || i === '6' || i === '7' || i === '8' || i === '9') {
-                            if (i !== str1[index]) {
-                                flag = 0;
-                            }
-                        }
-                        index++;
-                    }
 
-                    if (flag === 1) {
-                        myarr.push(d);
+            if (d === undefined || d === null || d.length < 10) {
+                continue;
+            }
+            let strNumber = await d.toString();
 
-                    }
+            let flag = true;
+
+
+            for (let key in patternObj) {
+
+                let temp = [];
+                for await (let g of patternObj[key]) {
+                    await temp.push(strNumber[g])
+                }
+
+                if (await allEqual(temp) === false) {
+                    flag = false;
+                    break;
                 }
             }
+
+            if (flag === true) {
+                await myarr.push(d);
+            }
+
+
 
         }
 
@@ -161,7 +193,7 @@ const SearchPattern = () => {
                     result === ''
                         ?
                         <div className="flex items-center justify-center space-x-2 animate-bounce">
-                            Upload file to search patterns
+                            Upload file to search patterns like ababxyabab or abcdabcdef
                         </div>
 
 
@@ -211,7 +243,7 @@ const SearchPattern = () => {
 
 
                                     <div>
-                                        <div className='my-2 text-xl font-bold text-blue-400'>Here are the matches</div>
+                                        <div className='my-2 text-xl font-bold text-blue-400'>Here are the matches for {search}</div>
                                         {finalOutput.map(h => (
                                             <div>
 
@@ -241,12 +273,8 @@ const SearchPattern = () => {
                 }
 
             </div>
-
-
-
-
         </div>
     )
 }
 
-export default SearchPattern;
+export default SearchDesign;
