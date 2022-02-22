@@ -513,6 +513,10 @@ app.post('/searchdesign', async (req, res) => {
                 await temp.push(strNumber[g])
             }
 
+            if (key === '0' || key === '1' || key === '2' || key === '3' || key === '4' || key === '5' || key === '6' || key === '7' || key === '8' || key === '9') {
+                await temp.push(key);
+            }
+
             if (await allEqual(temp) === false) {
                 flag = false;
                 break;
@@ -561,19 +565,27 @@ app.post('/pattern', upload.array('file'), async (req, res, next) => {
         return;
     }
 
+    // console.log(a3)
+
     let c = await a3.split('\n');
+    let pattern = /\d{10}/g;
+    let result = await a3.match(pattern);
+    // console.log(result);
 
-    for await (let d of c) {
-        let appu = await d.split(',');
-        let num = await appu[0];
-        let t = parseInt(num);
-        allnumbers.push(t);
+    // for await (let d of c) {
+    //     let appu = await d.split(',');
+    //     let num = await appu[0];
+    //     let t = parseInt(num);
+    //     allnumbers.push(t);
 
-    }
+    // }
 
-    await allnumbers.sort();
+    // await allnumbers.sort();
 
-    res.send(allnumbers);
+    // res.send(allnumbers);
+
+
+    res.send(result);
 })
 
 
