@@ -24,7 +24,7 @@ const SearchDesign = () => {
 
     const onChange2 = (e) => {
 
-        console.log(e.target.value)
+        // console.log(e.target.value)
 
 
 
@@ -58,7 +58,7 @@ const SearchDesign = () => {
 
     const submitForm1 = async () => {
         let url = '/pattern';
-        // const url = 'http://localhost:8000/pattern'
+        // let url = 'http://localhost:8000/pattern'
 
         setLoading(1);
 
@@ -72,64 +72,50 @@ const SearchDesign = () => {
         catch (e) {
             setLoading(0);
             console.log(e);
-
             let abcd = [["sahi se file upload karo bhaiya"]];
             setResult(abcd);
             return;
         }
-
-
         console.log(answer.data, "i am response");
         formData.delete('file');
-
     }
 
 
     const searchPattern = async () => {
 
+        let url = '/searchdesign';
+        // let url = 'http://localhost:8000/searchdesign';
 
+        let postArr = [result, patternObj]
 
-        let myarr = [];
-        for await (let d of result) {
+        let postData = {
 
-            if (d === undefined || d === null || d.length < 10) {
-                continue;
-            }
-            let strNumber = await d.toString();
-
-            let flag = true;
-
-
-            for (let key in patternObj) {
-
-                let temp = [];
-                for await (let g of patternObj[key]) {
-                    await temp.push(strNumber[g])
-                }
-
-                if (await allEqual(temp) === false) {
-                    flag = false;
-                    break;
-                }
-            }
-
-            if (flag === true) {
-                await myarr.push(d);
-            }
-
-
-
+            "pattern": patternObj,
+            "arr": result
         }
 
+        setFilter(1);
 
+        try {
+            var ans = await axios.post(url, postData);
+            await setFinalOutput(ans.data);
+            if (ans) {
+                setFilter(0);
+            }
 
-        if (myarr.length === 0) {
-            await myarr.push('no match found')
+            // console.log(ans.data);
+
         }
+        catch (e) {
+            setFilter(0);
+            console.log(e, "error hai bhaisahab")
+            let abcd = [["sahi se search karo bhaiya"]];
+            setResult(abcd);
+            return;
 
-        await setFinalOutput(myarr);
+        }
+        console.log(ans.data, "i am response");
 
-        console.log(myarr);
 
 
     }
@@ -231,40 +217,60 @@ const SearchDesign = () => {
                             <div>
 
 
+                                {filter === 1
+                                    ?
 
+                                    <div className="mt-20">
 
-
-
-
-
-
-
-                                <div className="flex items-center justify-center space-x-2 ">
-
-
-                                    <div>
-                                        <div className='my-2 text-xl font-bold text-blue-400'>Here are the matches for {search}</div>
-                                        {finalOutput.map(h => (
-                                            <div>
-
-
-                                                <tr className="border border-2">
-                                                    <li className="p-3 hover:bg-blue-600 hover:text-blue-200 border border-2 ">
-                                                        {h}
-                                                    </li>
-
-                                                </tr>
-
-                                            </div>
-                                        ))}
+                                        <div className="flex items-center justify-center space-x-2 animate-bounce">
+                                            Searching {search}
+                                            <div className="w-8 h-8 bg-blue-400 rounded-full"></div>
+                                            <div className="w-8 h-8 bg-green-400 rounded-full"></div>
+                                            <div className="w-8 h-8 bg-black rounded-full"></div>
+                                            <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
+                                            <div className="w-8 h-8 bg-red-400 rounded-full"></div>
+                                            <div className="w-8 h-8 bg-black rounded-full"></div>
+                                        </div>
                                     </div>
 
-                                </div>
+                                    :
+
+                                    <div className="flex items-center justify-center space-x-2 ">
+                                        <div>
+                                            <div className='my-2 text-xl font-bold text-blue-400'>Here are the matches for {search}</div>
+                                            {finalOutput.map(h => (
+                                                <div>
+
+
+                                                    <tr className="border border-2">
+                                                        <li className="p-3 hover:bg-blue-600 hover:text-blue-200 border border-2 ">
+                                                            {h}
+                                                        </li>
+
+                                                    </tr>
+
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                    </div>
+
+                                }
+
+
+
+
+
+
+
 
 
 
 
                             </div>
+
+
+
                         </div>
 
 

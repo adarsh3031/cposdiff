@@ -9,6 +9,9 @@ var upload = multer()
 const csv = require('csv-parser');
 const cors = require('cors');
 
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
 const staticPath = path.join(__dirname, '/front-end/build');
 console.log(staticPath)
 app.use(express.static(staticPath));
@@ -17,6 +20,8 @@ app.use(express.static(staticPath));
 
 app.use(cors());
 app.options('*', cors());
+
+
 
 let json_data1 = {
     "newUsers": [
@@ -41,6 +46,7 @@ let json_data3 = {
     "email": "summerprojects7781@gmail.com"
 }
 
+const allEqual = async (arr) => arr.every(v => v === arr[0])
 
 const sumDigit = async (num, sum = 0) => {
 
@@ -476,6 +482,60 @@ app.post('/hello', upload.array('file'), async (req, res, next) => {
     let difference = await new_data.filter(x => !filteredArray.includes(x));
 
     res.send(difference);
+
+})
+
+app.post('/searchdesign', async (req, res) => {
+
+    let data = req.body;
+
+    // console.log(data, "i am data");
+
+    let result = req.body.arr;
+    let patternObj = req.body.pattern;
+
+
+    let myarr = [];
+    for await (let d of result) {
+
+        if (d === undefined || d === null || d.length < 10) {
+            continue;
+        }
+        let strNumber = await d.toString();
+
+        let flag = true;
+
+
+        for await (let key of Object.keys(patternObj)) {
+
+            let temp = [];
+            for await (let g of patternObj[key]) {
+                await temp.push(strNumber[g])
+            }
+
+            if (await allEqual(temp) === false) {
+                flag = false;
+                break;
+            }
+        }
+
+        if (flag === true) {
+            await myarr.push(d);
+        }
+
+
+
+    }
+
+    if (myarr.length === 0) {
+        await myarr.push('no match found')
+    }
+
+
+
+    // console.log(myarr, "hii bro");
+
+    res.send(myarr)
 
 })
 
