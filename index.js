@@ -18,6 +18,24 @@ app.use(express.static(staticPath));
 app.use(cors());
 app.options('*', cors());
 
+let json_data1 = {
+    "newUsers": [
+        {
+            "userName": "Shivam 123",
+            "email": "pandyaksbm@gmail.com"
+        }
+    ]
+}
+
+let json_data2 = {
+    "newUsers": [
+        {
+            "userName": "shivam123",
+            "email": "pandyaksbm@gmail.com"
+        }
+    ]
+}
+
 
 const sumDigit = async (num, sum = 0) => {
 
@@ -364,6 +382,15 @@ const isNewCateg1 = (num) => {
 
 
 }
+
+
+app.get('/data1', (req, res) => {
+    res.send(json_data1);
+})
+
+app.get('/data2', (req, res) => {
+    res.send(json_data2);
+})
 
 
 
