@@ -492,39 +492,80 @@ app.post('/searchdesign', async (req, res) => {
     // console.log(data, "i am data");
 
     let result = req.body.arr;
-    let patternObj = req.body.pattern;
+    let pattern = req.body.search;
+    // console.log(pattern);
 
+    let patternLength = pattern.length;
+
+    let patternObj = {};
+    let temp_index = 0;
+
+    for await (let items of pattern) {
+        if (patternObj[items] === undefined) {
+            patternObj[items] = [];
+        }
+        patternObj[items].push(temp_index);
+        temp_index += 1;
+    }
+
+    // console.log(patternObj)
 
     let myarr = [];
+    let dumb = [];
+    let curr_index = 1;
+
+
     for await (let d of result) {
 
-        if (d === undefined || d === null || d.length < 10) {
+        if (d === undefined || d === null) {
             continue;
         }
         let strNumber = await d.toString();
+        let subStr = "";
 
-        let flag = true;
 
 
-        for await (let key of Object.keys(patternObj)) {
-
-            let temp = [];
-            for await (let g of patternObj[key]) {
-                await temp.push(strNumber[g])
+        for await (let digit of strNumber) {
+            let flag = true;
+            if (subStr.length === patternLength) {
+                let newSubStr = await subStr.slice(1);
+                subStr = newSubStr;
             }
 
-            if (key === '0' || key === '1' || key === '2' || key === '3' || key === '4' || key === '5' || key === '6' || key === '7' || key === '8' || key === '9') {
-                await temp.push(key);
+            subStr += digit;
+
+            if (subStr.length < patternLength) {
+                continue;
             }
 
-            if (await allEqual(temp) === false) {
-                flag = false;
-                break;
-            }
-        }
+            // dumb.push(subStr);
 
-        if (flag === true) {
-            await myarr.push(d);
+            for await (let key of Object.keys(patternObj)) {
+                let temp = [];
+                for await (let g of patternObj[key]) {
+                    await temp.push(subStr[g]);
+                }
+                if (key === '0' || key === '1' || key === '2' || key === '3' || key === '4' || key === '5' || key === '6' || key === '7' || key === '8' || key === '9') {
+                    await temp.push(key);
+                }
+
+                if (await allEqual(temp) === false) {
+                    flag = false;
+                    // dumb.push(temp);
+                    break;
+                }
+
+
+            }
+
+            if (flag === true) {
+                let object1 = {};
+                object1.id = curr_index;
+                object1.Number = d;
+                await myarr.push(object1);
+                curr_index += 1;
+            }
+
         }
 
 
@@ -532,12 +573,14 @@ app.post('/searchdesign', async (req, res) => {
     }
 
     if (myarr.length === 0) {
-        await myarr.push('no match found')
+        let object1 = {};
+        object1.id = curr_index;
+        object1.Number = 'No numbers found';
+        await myarr.push(object1);
     }
 
-
-
-    // console.log(myarr, "hii bro");
+    // console.log(myarr, curr_index, result.length, dumb.length, "hii bro");
+    // console.log(dumb);
 
     res.send(myarr)
 

@@ -1,7 +1,15 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import Backdrop from './Backdrop'
+
+import DataGridShow from './Table/DataGridShow'
+
 
 const SearchDesign = () => {
+
+
+
+
 
     const allEqual = async (arr) => arr.every(v => v === arr[0])
     let [search, setSearch] = useState('');
@@ -30,23 +38,23 @@ const SearchDesign = () => {
 
         setSearch(e.target.value);
 
-        let s = e.target.value;
+        // let s = e.target.value;
 
-        if (s !== undefined && s !== null && s.length === 10) {
+        // if (s !== undefined && s !== null && s.length === 10) {
 
-            let Obj = {};
+        //     let Obj = {};
 
-            for (let i = 0; i < 10; i++) {
-                if (Obj[s[i]] === undefined) {
-                    Obj[s[i]] = [];
-                }
-                Obj[s[i]].push(i);
-            }
+        //     for (let i = 0; i < 10; i++) {
+        //         if (Obj[s[i]] === undefined) {
+        //             Obj[s[i]] = [];
+        //         }
+        //         Obj[s[i]].push(i);
+        //     }
 
-            setPatternObj(Obj);
-            console.log(Obj);
+        //     setPatternObj(Obj);
+        //     console.log(Obj);
 
-        }
+        // }
 
 
 
@@ -86,12 +94,13 @@ const SearchDesign = () => {
         let url = '/searchdesign';
         // let url = 'http://localhost:8000/searchdesign';
 
-        let postArr = [result, patternObj]
+        // let postArr = [result, patternObj]
 
         let postData = {
 
-            "pattern": patternObj,
-            "arr": result
+            // "pattern": patternObj,
+            "arr": result,
+            "search": search,
         }
 
         setFilter(1);
@@ -123,6 +132,8 @@ const SearchDesign = () => {
 
     return (
         <div>
+
+
             <div className="flex justify-center mt-10 mx-auto">
 
                 <div className="  w-full max-w-xs ">
@@ -220,17 +231,11 @@ const SearchDesign = () => {
                                 {filter === 1
                                     ?
 
-                                    <div className="mt-20">
 
-                                        <div className="flex items-center justify-center space-x-2 animate-bounce">
-                                            Searching {search}
-                                            <div className="w-8 h-8 bg-blue-400 rounded-full"></div>
-                                            <div className="w-8 h-8 bg-green-400 rounded-full"></div>
-                                            <div className="w-8 h-8 bg-black rounded-full"></div>
-                                            <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
-                                            <div className="w-8 h-8 bg-red-400 rounded-full"></div>
-                                            <div className="w-8 h-8 bg-black rounded-full"></div>
-                                        </div>
+
+
+                                    <div className="mt-20">
+                                        <Backdrop />
                                     </div>
 
                                     :
@@ -238,7 +243,7 @@ const SearchDesign = () => {
                                     <div className="flex items-center justify-center space-x-2 ">
                                         <div>
                                             <div className='my-2 text-xl font-bold text-blue-400'>Here are the matches for {search}</div>
-                                            {finalOutput.map(h => (
+                                            {/* {finalOutput.map(h => (
                                                 <div>
 
 
@@ -250,7 +255,9 @@ const SearchDesign = () => {
                                                     </tr>
 
                                                 </div>
-                                            ))}
+                                            ))} */}
+
+                                            <DataGridShow rows={finalOutput} />
                                         </div>
 
                                     </div>

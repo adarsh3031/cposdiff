@@ -9,34 +9,13 @@ import SearchDesign from './SearchDesign'
 
 
 function App() {
-
-
-
-
-
-
-
-
-
-
   return (
     <div className="">
 
-
       <Tabs />
 
-
-
-
-
-
-
     </div>
-
-
-
   )
-
 
 }
 
