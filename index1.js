@@ -12,7 +12,6 @@
 
 // }
 
-
 // let temp = 4
 // let reg = `\\d\{${temp}\}`
 // let regex = new RegExp(reg)

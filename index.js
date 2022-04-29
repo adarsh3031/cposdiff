@@ -333,6 +333,13 @@ const findPattern = (num) => {
         obj.abcd_xyz_xyz = false;
     }
 
+    if (str[0] == str[2] && str[1] == str[3] && str[5] == str[7] && str[6] == str[8] && str[0] == str[5] && str[1] == str[6]) {
+        obj.ababdababe = true;
+    }
+    else {
+        obj.ababdababe = false;
+    }
+
     return obj;
 
 }
@@ -676,6 +683,8 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
     let super_vip = [];
     let new_categ1 = [];
 
+    let ababdababe = [];
+
 
 
 
@@ -762,7 +771,7 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
                 super_vip.push(t);
             }
 
-            if (pattern.xy00_xb00 || pattern.xy00_xa00 || pattern.xxx_z_xxx || pattern.ab_xy_xy_ab_ab || pattern.ab_xy_ab_xy_xy || pattern.ab_zxxx_zaaa || pattern.xy00_xy00 || pattern.xyxy_yxyx || pattern.xxxxyxx || pattern.x00y_x00y || pattern.ab_xxx_cd_xxx || isPalindrome(t) || pattern.ab_xyxz_xyxz || pattern.ab_xyxy_xzxz) {
+            if (pattern.xy00_xb00 || pattern.xy00_xa00 || pattern.xxx_z_xxx || pattern.ab_xy_xy_ab_ab || pattern.ab_xy_ab_xy_xy || pattern.ab_zxxx_zaaa || pattern.xy00_xy00 || pattern.xyxy_yxyx || pattern.xxxxyxx || pattern.x00y_x00y || pattern.ab_xxx_cd_xxx || isPalindrome(t) || pattern.ab_xyxz_xyxz || pattern.ab_xyxy_xzxz || pattern.ababdababe) {
                 super_vip.push(t);
             }
 
@@ -785,6 +794,10 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
 
             if (isNewCateg1(t) === true) {
                 new_categ1.push(t)
+            }
+
+            if (pattern.ababdababe) {
+                ababdababe.push(t);
             }
 
         }
@@ -813,6 +826,7 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
 
 
 
+
     data.push(super_vip);
 
 
@@ -834,6 +848,7 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
     data.push(abc_abc_wxyz);
     data.push(abcd_xyz_xyz);
     data.push(new_categ1);
+
 
 
     res.send(data);
