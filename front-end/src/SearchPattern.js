@@ -30,7 +30,7 @@ const SearchPattern = () => {
     }
 
     const submitForm1 = async () => {
-        const formData = new FormData();
+        let formData = new FormData();
         formData.append('file', oldFile);
 
         let url = '/pattern';

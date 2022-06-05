@@ -59,7 +59,7 @@ export default function Diff() {
         // const url = 'http://localhost:8000/hello'
         try {
             var ans = await axios.post(url, formData);
-            console.log(ans);
+            // console.log(ans);
             if (ans) {
                 setLoading(0);
             }
