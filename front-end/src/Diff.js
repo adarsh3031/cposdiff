@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CSVLink } from "react-csv";
 import axios from 'axios';
+import './Spinner.css'
 
 export default function Diff() {
 
@@ -49,7 +50,7 @@ export default function Diff() {
     }
 
     const submitForm1 = async () => {
-        const formData = new FormData();
+        let formData = new FormData();
         formData.append('file', oldFile);
         formData.append('file', newFile);
         console.log(formData)
@@ -149,13 +150,15 @@ export default function Diff() {
                     <div className="mt-20">
 
                         <div class="flex items-center justify-center space-x-2 animate-bounce">
-                            <div class="w-8 h-8 bg-blue-400 rounded-full"></div>
+                            {/* <div class="w-8 h-8 bg-blue-400 rounded-full"></div>
                             <div class="w-8 h-8 bg-green-400 rounded-full"></div>
                             <div class="w-8 h-8 bg-black rounded-full"></div>
                             <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
                             <div class="w-8 h-8 bg-red-400 rounded-full"></div>
-                            <div class="w-8 h-8 bg-black rounded-full"></div>
+                            <div class="w-8 h-8 bg-black rounded-full"></div> */}
+                            <div className="loader"></div>
                         </div>
+                        
                     </div>
 
                     :
