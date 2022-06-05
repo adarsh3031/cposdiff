@@ -24,9 +24,11 @@ export default function Diff() {
 
 
 
-    const formData = new FormData();
+    
 
     const [loading, setLoading] = useState(0);
+    let [oldFile,setOldFile] = useState('')
+    let [newFile,setNewFile] = useState('')
 
 
 
@@ -35,16 +37,22 @@ export default function Diff() {
 
 
     const onChange1 = (e) => {
-        let oldfile = (e.target.files[0]);
-        formData.append('file', oldfile);
+        setOldFile(e.target.files[0])
+        // let oldfile = (e.target.files[0]);
+        // formData.append('file', oldfile);
     }
 
     const onChange2 = (e) => {
-        let newfile = (e.target.files[0]);
-        formData.append('file', newfile);
+        setNewFile(e.target.files[0])
+        // let newfile = (e.target.files[0]);
+        // formData.append('file', newfile);
     }
 
     const submitForm1 = async () => {
+        const formData = new FormData();
+        formData.append('file', oldFile);
+        formData.append('file', newFile);
+        console.log(formData)
         setLoading(1);
         const url = '/hello';
         // const url = 'http://localhost:8000/hello'

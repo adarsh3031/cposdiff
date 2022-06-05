@@ -7,16 +7,20 @@ const SearchPattern = () => {
     let [filter, setFilter] = useState(0);
 
     let [finalOutput, setFinalOutput] = useState([]);
+    let [oldFile,setOldFile] = useState('')
 
-    const formData = new FormData();
+    
 
     const [loading, setLoading] = useState(0);
 
 
     const onChange1 = (e) => {
-        let oldfile = (e.target.files[0]);
-        formData.append('file', oldfile);
-        console.log(formData);
+        setOldFile(e.target.files[0])
+        
+
+        // let oldfile = (e.target.files[0]);
+        // formData.append('file', oldfile);
+        // console.log(formData);
     }
 
     const onChange2 = (e) => {
@@ -26,6 +30,9 @@ const SearchPattern = () => {
     }
 
     const submitForm1 = async () => {
+        const formData = new FormData();
+        formData.append('file', oldFile);
+
         let url = '/pattern';
         // const url = 'http://localhost:8000/pattern'
 

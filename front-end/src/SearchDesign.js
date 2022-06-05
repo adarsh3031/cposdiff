@@ -19,15 +19,18 @@ const SearchDesign = () => {
 
     let [finalOutput, setFinalOutput] = useState([]);
 
-    const formData = new FormData();
+    let [oldFile,setOldFile] = useState('')
+
+    
 
     const [loading, setLoading] = useState(0);
 
 
     const onChange1 = (e) => {
-        let oldfile = (e.target.files[0]);
-        formData.append('file', oldfile);
-        console.log(formData);
+        setOldFile(e.target.files[0])
+        // let oldfile = (e.target.files[0]);
+        // formData.append('file', oldfile);
+        // console.log(formData);
     }
 
     const onChange2 = (e) => {
@@ -65,6 +68,8 @@ const SearchDesign = () => {
     }
 
     const submitForm1 = async () => {
+        const formData = new FormData();
+        formData.append('file', oldFile);
         let url = '/pattern';
         // let url = 'http://localhost:8000/pattern'
 
