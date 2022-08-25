@@ -269,6 +269,35 @@ const findPattern = (num) => {
         obj.xyxy_yxyx = false;
     }
 
+    //abxy0000xy
+    if(str[2] === str[8] && str[3] === str[9]  && str[4] === '0' && str[5] === '0' && str[6] === '0' && str[7] === '0') {
+        obj.abxy0000xy = true
+    }
+    //abc000bcbc
+    if(str[3] === '0' && str[4] === '0' && str[5] === '0' && str[1] === str[6] && str[6] === str[8] && str[7] === str[9] && str[9] === str[2]) {
+        obj.abc000bcbc = true
+    }
+    //aabbcccxcx
+    if(str[0] === str[1] && str[2] === str[3] && str[4] === str[5] && str[5] === str[6] && str[6] === str[8] && str[7] === str[9]) {
+        obj.aabbcccxcx = true
+    }
+    //aabbaaxyxy
+    if(str[0] === str[1] && str[1] === str[4] && str[4] === str[5] && str[2] === str[3] && str[6] === str[8] && str[7] === str[9]) {
+        obj.aabbaaxyxy = true
+    }
+    //axyxyacdcd
+    if(str[0] === str[5] && str[1] === str[3] && str[2] === str[4] && str[6] === str[8] && str[7] === str[9] ) {
+        obj.axyxyacdcd = true
+    }
+    //abcd1abcd2
+    if(str[9] === str[4] + 1 && str[0] === str[5] && str[1] === str[6] && str[2] === str[7] && str[3] === str[8] && str[4] === str[9]) {
+        obj.abcd1abcd2 = true
+    }
+    //abxy00xyxy
+    if(str[6] === str[8] && str[7] === str[9] &&str[9] === str[3] && str[2] === str[8] && str[4] === '0' && str[5] === '0' ) {
+        obj.abxy00xyxy = true
+    }
+
     for (let i = 0; i <= 6; i++) {
 
         if (str[i] === str[i + 1] && str[i + 1] === str[i + 2] && str[i + 2] === str[i + 3]) {
@@ -699,7 +728,6 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
         let pattern = await findPattern(t);
 
         if ((ans1 % 9) === 0) {
-
             let count1 = 0;
             let nnn = t;
             while (nnn > 0) {
@@ -709,33 +737,25 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
                     count1 += 1;
                 }
             }
-
-
             if (count1 >= 6) {
                 nine.push(t);
             }
-
-
         }
 
         if (ans2 <= 2) {
             super_vip.push(t);
 
         }
-
         if (ans2 === 3) {
             mxthree.push(t);
 
         }
-
         if (ans3 >= 6) {
             mxfreq6.push(t);
         }
-
         if (ans3 >= 7) {
             super_vip.push(t);
         }
-
         if (pattern !== null) {
 
             if (pattern.abcd_x_abcd_y) {
@@ -771,7 +791,7 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
                 super_vip.push(t);
             }
 
-            if (pattern.xy00_xb00 || pattern.xy00_xa00 || pattern.xxx_z_xxx || pattern.ab_xy_xy_ab_ab || pattern.ab_xy_ab_xy_xy || pattern.ab_zxxx_zaaa || pattern.xy00_xy00 || pattern.xyxy_yxyx || pattern.xxxxyxx || pattern.x00y_x00y || pattern.ab_xxx_cd_xxx || isPalindrome(t) || pattern.ab_xyxz_xyxz || pattern.ab_xyxy_xzxz || pattern.ababdababe) {
+            if (pattern.xy00_xb00 || pattern.xy00_xa00 || pattern.xxx_z_xxx || pattern.ab_xy_xy_ab_ab || pattern.ab_xy_ab_xy_xy || pattern.ab_zxxx_zaaa || pattern.xy00_xy00 || pattern.xyxy_yxyx || pattern.xxxxyxx || pattern.x00y_x00y || pattern.ab_xxx_cd_xxx || isPalindrome(t) || pattern.ab_xyxz_xyxz || pattern.ab_xyxy_xzxz || pattern.ababdababe || pattern.abxy0000xy || pattern.abc000bcbc || pattern.aabbcccxcx || pattern.aabbaaxyxy || pattern.axyxyacdcd || pattern.abcd1abcd2 || pattern.abxy00xyxy ) {
                 super_vip.push(t);
             }
 
