@@ -26,7 +26,7 @@ app.options('*', cors());
 let json_data1 = {
     "newUsers": [
         {
-            "userName": "Shivam 123",
+            "userName": "Shivam pandey",
             "email": "pandyaksbm@gmail.com"
         }
     ]
@@ -35,7 +35,7 @@ let json_data1 = {
 let json_data2 = {
     "newUsers": [
         {
-            "userName": "shivam123",
+            "userName": "shivam pandey",
             "email": "pandyaksbm@gmail.com"
         }
     ]
@@ -45,6 +45,26 @@ let json_data3 = {
     "name": "Shivam P1",
     "email": "summerprojects7781@gmail.com"
 }
+
+
+
+
+app.get('/data1', (req, res) => {
+    res.send(json_data1);
+})
+
+app.get('/data2', (req, res) => {
+    res.send(json_data2);
+})
+
+app.get('/data3', (req, res) => {
+    res.send(json_data3);
+})
+
+
+
+
+
 
 const allEqual = async (arr) => arr.every(v => v === arr[0])
 
@@ -270,31 +290,31 @@ const findPattern = (num) => {
     }
 
     //abxy0000xy
-    if(str[2] === str[8] && str[3] === str[9]  && str[4] === '0' && str[5] === '0' && str[6] === '0' && str[7] === '0') {
+    if (str[2] === str[8] && str[3] === str[9] && str[4] === '0' && str[5] === '0' && str[6] === '0' && str[7] === '0') {
         obj.abxy0000xy = true
     }
     //abc000bcbc
-    if(str[3] === '0' && str[4] === '0' && str[5] === '0' && str[1] === str[6] && str[6] === str[8] && str[7] === str[9] && str[9] === str[2]) {
+    if (str[3] === '0' && str[4] === '0' && str[5] === '0' && str[1] === str[6] && str[6] === str[8] && str[7] === str[9] && str[9] === str[2]) {
         obj.abc000bcbc = true
     }
     //aabbcccxcx
-    if(str[0] === str[1] && str[2] === str[3] && str[4] === str[5] && str[5] === str[6] && str[6] === str[8] && str[7] === str[9]) {
+    if (str[0] === str[1] && str[2] === str[3] && str[4] === str[5] && str[5] === str[6] && str[6] === str[8] && str[7] === str[9]) {
         obj.aabbcccxcx = true
     }
     //aabbaaxyxy
-    if(str[0] === str[1] && str[1] === str[4] && str[4] === str[5] && str[2] === str[3] && str[6] === str[8] && str[7] === str[9]) {
+    if (str[0] === str[1] && str[1] === str[4] && str[4] === str[5] && str[2] === str[3] && str[6] === str[8] && str[7] === str[9]) {
         obj.aabbaaxyxy = true
     }
     //axyxyacdcd
-    if(str[0] === str[5] && str[1] === str[3] && str[2] === str[4] && str[6] === str[8] && str[7] === str[9] ) {
+    if (str[0] === str[5] && str[1] === str[3] && str[2] === str[4] && str[6] === str[8] && str[7] === str[9]) {
         obj.axyxyacdcd = true
     }
     //abcd1abcd2
-    if(str[9] === str[4] + 1 && str[0] === str[5] && str[1] === str[6] && str[2] === str[7] && str[3] === str[8] && str[4] === str[9]) {
+    if (str[9] === str[4] + 1 && str[0] === str[5] && str[1] === str[6] && str[2] === str[7] && str[3] === str[8] && str[4] === str[9]) {
         obj.abcd1abcd2 = true
     }
     //abxy00xyxy
-    if(str[6] === str[8] && str[7] === str[9] &&str[9] === str[3] && str[2] === str[8] && str[4] === '0' && str[5] === '0' ) {
+    if (str[6] === str[8] && str[7] === str[9] && str[9] === str[3] && str[2] === str[8] && str[4] === '0' && str[5] === '0') {
         obj.abxy00xyxy = true
     }
 
@@ -429,19 +449,6 @@ const isNewCateg1 = (num) => {
 
 
 }
-
-
-app.get('/data1', (req, res) => {
-    res.send(json_data1);
-})
-
-app.get('/data2', (req, res) => {
-    res.send(json_data2);
-})
-
-app.get('/data3', (req, res) => {
-    res.send(json_data3);
-})
 
 
 
@@ -791,7 +798,7 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
                 super_vip.push(t);
             }
 
-            if (pattern.xy00_xb00 || pattern.xy00_xa00 || pattern.xxx_z_xxx || pattern.ab_xy_xy_ab_ab || pattern.ab_xy_ab_xy_xy || pattern.ab_zxxx_zaaa || pattern.xy00_xy00 || pattern.xyxy_yxyx || pattern.xxxxyxx || pattern.x00y_x00y || pattern.ab_xxx_cd_xxx || isPalindrome(t) || pattern.ab_xyxz_xyxz || pattern.ab_xyxy_xzxz || pattern.ababdababe || pattern.abxy0000xy || pattern.abc000bcbc || pattern.aabbcccxcx || pattern.aabbaaxyxy || pattern.axyxyacdcd || pattern.abcd1abcd2 || pattern.abxy00xyxy ) {
+            if (pattern.xy00_xb00 || pattern.xy00_xa00 || pattern.xxx_z_xxx || pattern.ab_xy_xy_ab_ab || pattern.ab_xy_ab_xy_xy || pattern.ab_zxxx_zaaa || pattern.xy00_xy00 || pattern.xyxy_yxyx || pattern.xxxxyxx || pattern.x00y_x00y || pattern.ab_xxx_cd_xxx || isPalindrome(t) || pattern.ab_xyxz_xyxz || pattern.ab_xyxy_xzxz || pattern.ababdababe || pattern.abxy0000xy || pattern.abc000bcbc || pattern.aabbcccxcx || pattern.aabbaaxyxy  || pattern.abcd1abcd2 || pattern.abxy00xyxy) {
                 super_vip.push(t);
             }
 
@@ -812,7 +819,7 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
             }
 
 
-            if (isNewCateg1(t) === true) {
+            if (isNewCateg1(t) === true || pattern.axyxyacdcd) {
                 new_categ1.push(t)
             }
 
@@ -828,21 +835,52 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
     }
 
     await super_vip.sort();
+    await super_vip.reverse()
+
     await xxxx.sort();
+    await xxxx.reverse()
+
     await x00x_y00y.sort();
+    await x00x_y00y.reverse();
+
     await abcd_abcd.sort();
+    await abcd_abcd.reverse();
+
     await nine.sort();
+    await nine.reverse();
+
     await mxthree.sort();
+    await mxthree.reverse();
+
     await mxfreq6.sort();
+    await mxfreq6.reverse();
+
     await abcd_x_abcd_y.sort();
+    await abcd_x_abcd_y.reverse();
+
     await xy_abba_abba.sort();
+    await xy_abba_abba.reverse();
+
     await abcc_x_abcc_y.sort();
+    await abcc_x_abcc_y.reverse();
+
     await abc_xx_abc_yy.sort();
+    await abc_xx_abc_yy.reverse();
+
     await xy_a0_b0_c0_d0.sort();
+    await xy_a0_b0_c0_d0.reverse();
+
     await xy_abab_cdcd.sort();
+    await xy_abab_cdcd.reverse();
+
     await abc_abc_wxyz.sort();
+    await abc_abc_wxyz.reverse();
+
     await abcd_xyz_xyz.sort();
+    await abcd_xyz_xyz.reverse();
+
     await new_categ1.sort();
+    await new_categ1.reverse();
 
 
 
