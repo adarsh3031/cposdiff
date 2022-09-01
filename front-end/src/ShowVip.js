@@ -26,8 +26,8 @@ export default function ShowVip() {
     }
 
     const submitForm2 = async () => {
-        // let url = '/vip';
-        const url = 'http://localhost:8000/vip'
+        let url = '/vip';
+        // const url = 'http://localhost:8000/vip'
         setLoading(1);
         try {
             var answer = await axios.post(url, formData2);
