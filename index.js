@@ -318,6 +318,46 @@ const findPattern = (num) => {
         obj.abxy00xyxy = true
     }
 
+    //abcdcdcxcd 
+    if(str[2] === str[4] && str[4] === str[6] && str[6] === str[8] && str[3] === str[5] && str[5] === str[9]) {
+        obj.abcdcdcxcd = true
+    }
+
+    //abcdabcdxy
+    if(str[0] === str[4] && str[1] === str[5] && str[6] === str[2] && str[3] === str[7] ) {
+        obj.abcdabcdxy = true
+    }
+
+    //abcdcdxdcd
+    if(str[2] === str[4] && str[4] === str[8] && str[3] === str[5] && str[5] === str[7] && str[7] === str[9] ) {
+        obj.abcdcdxdcd = true
+    }
+
+    //abcdxdcdcd 
+    if(str[2] === str[6] && str[6] === str[8] && str[3] === str[5] && str[5] === str[7] && str[7] === str[9] ) {
+        obj.abcdxdcdcd = true
+    }
+
+    //abeabxydxy
+    if(str[0] === str[3] && str[1] === str[4] && str[5] === str[8] && str[6] === str[9] ) {
+        obj.abeabxydxy = true
+    }
+
+    //abxxxyzzzy
+    if(str[2] === str[3] && str[3] === str[4] && str[8] === str[7] && str[6] === str[7] && str[5] === str[9] ) {
+        obj.abxxxyzzzy = true
+    }
+
+    //abcdcdabcd
+
+    if(str[0] === str[6] && str[1] === str[7] && str[2] === str[4] && str[4] === str[8] && str[5] === str[9] && str[3] === str[5] ) {
+        obj.abcdcdabcd = true
+    }
+
+    
+    
+    
+
     for (let i = 0; i <= 6; i++) {
 
         if (str[i] === str[i + 1] && str[i + 1] === str[i + 2] && str[i + 2] === str[i + 3]) {
@@ -425,9 +465,9 @@ const isNewCateg1 = (num) => {
 
     let str = s.substring(4, 10);
 
-    let endswith = ['001313', '000420', '000143', '000786', '123123', '143143', '302302', '786786', '420420', '101101', '100100', '313313', '501501', '108108', '214214', '306090', '102030', '008055', '010203', '307307', '111111', '222222', '333333', '444444', '123456', '555555', '666666', '777777', '888888', '999999', '420786', '143786'];
+    let endswith = ['001313', '000420', '000143', '000786', '123123', '143143', '302302', '786786', '420420', '101101', '100100', '313313', '501501', '108108', '214214', '306090', '102030', '010203', '307307', '111111', '222222', '333333', '444444', '123456', '555555', '666666', '777777', '888888', '999999', '420786', '143786'];
 
-    let random = ['420420', '143143', '0001313', '123123', '786786', '92119211', '0009211'];
+    let random = ['420420', '143143', '0001313', '123123', '786786', '92119211'];
 
     if (s.search('0001010') !== -1) {
         return true;
@@ -699,10 +739,10 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
 
 
     let c = await a1.split('\n');
-    let nine = [];
+    let abxbabab = [];
     let mxthree = [];
     let mxtwo = [];
-    let mxfreq6 = [];
+    let others = [];
     let mxfreq7 = [];
     let abcd_x_abcd_y = [];
     let xy_abba_abba = [];
@@ -734,20 +774,6 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
         let ans3 = await maximumFreq(t);
         let pattern = await findPattern(t);
 
-        if ((ans1 % 9) === 0) {
-            let count1 = 0;
-            let nnn = t;
-            while (nnn > 0) {
-                let kk = nnn % 10;
-                nnn = Math.floor(nnn / 10);
-                if (kk === 9) {
-                    count1 += 1;
-                }
-            }
-            if (count1 >= 6) {
-                nine.push(t);
-            }
-        }
 
         if (ans2 <= 2) {
             super_vip.push(t);
@@ -757,9 +783,7 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
             mxthree.push(t);
 
         }
-        if (ans3 >= 6) {
-            mxfreq6.push(t);
-        }
+       
         if (ans3 >= 7) {
             super_vip.push(t);
         }
@@ -781,10 +805,22 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
                 abc_xx_abc_yy.push(t);
             }
 
-
-            if (pattern.xy_a0_b0_c0_d0) {
-                xy_a0_b0_c0_d0.push(t);
+            if(pattern.abcdcdcxcd || pattern.abcdabcdxy || pattern.abcdcdxdcd || pattern.abcdxdcdcd) {
+                abxbabab.push(t)
             }
+
+            if(pattern.abeabxydxy || pattern.abxxxyxxxy || pattern.abcdcdabcd ) {
+                others.push(t)
+            }
+
+
+
+
+
+
+            // if (pattern.xy_a0_b0_c0_d0) {
+            //     xy_a0_b0_c0_d0.push(t);
+            // }
 
             if (pattern.xy_abab_cdcd) {
                 xy_abab_cdcd.push(t);
@@ -846,14 +882,14 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
     await abcd_abcd.sort();
     await abcd_abcd.reverse();
 
-    await nine.sort();
-    await nine.reverse();
+    await abxbabab.sort();
+    await abxbabab.reverse();
 
     await mxthree.sort();
     await mxthree.reverse();
 
-    await mxfreq6.sort();
-    await mxfreq6.reverse();
+    await others.sort();
+    await others.reverse();
 
     await abcd_x_abcd_y.sort();
     await abcd_x_abcd_y.reverse();
@@ -892,10 +928,10 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
     data.push(x00x_y00y);
     data.push(abcd_abcd);
 
-    data.push(nine);
+    data.push(abxbabab);
 
     data.push(mxthree);
-    data.push(mxfreq6);
+    data.push(others);
 
     data.push(abcd_x_abcd_y);
     data.push(xy_abba_abba);

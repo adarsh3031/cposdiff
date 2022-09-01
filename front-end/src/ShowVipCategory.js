@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ShowVipCategory({ arrcateg, index, curr_window }) {
 
-    const category_name = ["Super-Vip", "XXXX", "X00X-Y00Y", "ABCD-ABCD", "Sum 9", "3 Digits", "6 times", "ABCD-X-ABCD-Y", "XY-ABBA-ABBA", "ABCC-X-ABCC-Y", "ABC-XX-ABC-YY", "XY=A0B0C0D0", "XY-ABAB-CDCD", "ABC-ABC-WXYZ", "ABCD-XYZ-XYZ", "16-feb-newcateg"];
+    const category_name = ["Super-Vip", "XXXX", "X00X-Y00Y", "ABCD-ABCD", "ABXBABAB", "3 Digits", "Others", "ABCD-X-ABCD-Y", "XY-ABBA-ABBA", "ABCC-X-ABCC-Y", "ABC-XX-ABC-YY", "XY=A0B0C0D0", "XY-ABAB-CDCD", "ABC-ABC-WXYZ", "ABCD-XYZ-XYZ", "16-feb-newcateg"];
     const colors = ["red-400", "blue-300", "green-300", "pink-400", "yellow-500"];
 
 
