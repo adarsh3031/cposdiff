@@ -364,15 +364,20 @@ const findPattern = (num) => {
         }
     }
 
+    function digSumToSingleDigit(n)
+    {
+        if (n == 0){
+            return 0
+        } 
+        return (n % 9 == 0) ? 9 : (n % 9);
+    }
+
     if(fffff) {
-        if(sum971 === 1 || sum971 === 7 || sum971 === 9) {
+        let k = digSumToSingleDigit(sum971)
+        if(k === 1 || k === 7 || k === 9) {
             obj.is971 = true
         }
     }
-
-    
-    
-    
 
     for (let i = 0; i <= 6; i++) {
 
