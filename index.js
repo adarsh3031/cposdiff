@@ -354,6 +354,22 @@ const findPattern = (num) => {
         obj.abcdcdabcd = true
     }
 
+    // is971
+    let fffff = true
+    let sum971 = 0
+    for(let i = 0 ; i < 10; i++) {
+        if(str[i] != '7' && str[i] != '9' && str[i] != '1') {
+            fffff = false
+            sum += parseInt(str[i])
+        }
+    }
+
+    if(fffff) {
+        if(sum971 === 1 || sum971 === 7 || sum971 === 9) {
+            obj.is971 = true
+        }
+    }
+
     
     
     
@@ -809,7 +825,7 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
                 abxbabab.push(t)
             }
 
-            if(pattern.abeabxydxy || pattern.abxxxyxxxy || pattern.abcdcdabcd ) {
+            if(pattern.abeabxydxy || pattern.abxxxyxxxy || pattern.abcdcdabcd || pattern.is971 ) {
                 others.push(t)
             }
 
@@ -862,12 +878,7 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
             if (pattern.ababdababe) {
                 ababdababe.push(t);
             }
-
         }
-
-
-
-
     }
 
     await super_vip.sort();
