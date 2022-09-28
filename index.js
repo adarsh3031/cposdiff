@@ -360,16 +360,16 @@ const findPattern = (num) => {
     for(let i = 0 ; i < 10; i++) {
         if(str[i] != '7' && str[i] != '9' && str[i] != '1') {
             fffff = false
-            sum971 += parseInt(str[i])
         }
+        sum971 += parseInt(str[i])
     }
 
     function digSumToSingleDigit(n)
     {
-        if (n == 0){
+        if (n === 0){
             return 0
         } 
-        return (n % 9 == 0) ? 9 : (n % 9);
+        return (n % 9 === 0) ? 9 : (n % 9);
     }
 
     if(fffff) {
