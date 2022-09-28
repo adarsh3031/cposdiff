@@ -360,7 +360,7 @@ const findPattern = (num) => {
     for(let i = 0 ; i < 10; i++) {
         if(str[i] != '7' && str[i] != '9' && str[i] != '1') {
             fffff = false
-            sum += parseInt(str[i])
+            sum971 += parseInt(str[i])
         }
     }
 
