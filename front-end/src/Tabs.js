@@ -1,7 +1,6 @@
 import React from "react";
 import Diff from "./Diff";
 import ShowVip from "./ShowVip"
-import SearchPattern from "./SearchPattern"
 import SearchDesign from "./SearchDesign"
 
 const Tabs = ({ color }) => {
@@ -81,14 +80,8 @@ const Tabs = ({ color }) => {
                                     <Diff></Diff>
                                 </div>
                                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
-
                                     <ShowVip></ShowVip>
-
                                 </div>
-                                {/* <div className={openTab === 3 ? "block" : "hidden"} id="link3">
-                                    <SearchPattern></SearchPattern>
-                                </div> */}
-
                                 <div className={openTab === 3 ? "block" : "hidden"} id="link3">
                                     <SearchDesign></SearchDesign>
                                 </div>

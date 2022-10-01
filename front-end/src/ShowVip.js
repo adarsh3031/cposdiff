@@ -31,7 +31,9 @@ export default function ShowVip() {
         setLoading(1);
         try {
             var answer = await axios.post(url, formData2);
-            console.log(answer);
+            console.log(answer.data.data);
+            console.log('uploaded file is', answer.data.file_name )
+            console.log('numbers in this file are ', answer.data.numbers_in_this_file )
             if (answer) {
                 setLoading(0);
             }
@@ -39,19 +41,24 @@ export default function ShowVip() {
         catch (e) {
             setLoading(0);
             console.log(e);
-            let abcd = [["sahi se file upload karo bhaiya"]];
-
+            console.log(e.message)
+            let networkerror = 'error'
+            if(e.message === 'Network Error') {
+                networkerror = 'please check whether your backend is connected or not or you must be connected to an INTERNET Connection'
+                console.log('please check whether your backend is connected or not or you must be connected to an INTERNET Connection')
+            }
+            console.log(e?.response)
+            let abcd = [["error here"], ["statusCode: ", e?.response?.request?.status], ["errorMessage: ", e?.response?.data?.message ], [e?.message], [networkerror]];
             setVip(abcd);
             return;
         }
         console.log(answer, "i am response");
         let myarr = [];
-        for await (let d of answer.data) {
+        for await (let d of answer.data.data) {
             myarr.push(d);
         }
         setVip(myarr);
         formData2.delete('file');
-
     }
 
 

@@ -8,6 +8,7 @@ const multer = require('multer');
 var upload = multer()
 const csv = require('csv-parser');
 const cors = require('cors');
+const { Console } = require('console');
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -21,51 +22,7 @@ app.use(express.static(staticPath));
 app.use(cors());
 app.options('*', cors());
 
-
-
-let json_data1 = {
-    "newUsers": [
-        {
-            "userName": "Shivam pandey",
-            "email": "pandyaksbm@gmail.com"
-        }
-    ]
-}
-
-let json_data2 = {
-    "newUsers": [
-        {
-            "userName": "shivam pandey",
-            "email": "pandyaksbm@gmail.com"
-        }
-    ]
-}
-
-let json_data3 = {
-    "name": "Shivam P1",
-    "email": "summerprojects7781@gmail.com"
-}
-
-
-
-
-app.get('/data1', (req, res) => {
-    res.send(json_data1);
-})
-
-app.get('/data2', (req, res) => {
-    res.send(json_data2);
-})
-
-app.get('/data3', (req, res) => {
-    res.send(json_data3);
-})
-
-
-
-
-
-
+// functions
 const allEqual = async (arr) => arr.every(v => v === arr[0])
 
 const sumDigit = async (num, sum = 0) => {
@@ -129,7 +86,6 @@ const maximumFreq = async (num) => {
     return max_count;
 }
 
-
 const isPalindrome = (num) => {
     let str = num.toString();
     if (str.length < 10) {
@@ -143,7 +99,6 @@ const isPalindrome = (num) => {
     return 0;
 
 }
-
 
 const findPattern = (num) => {
     let str = num.toString();
@@ -319,62 +274,61 @@ const findPattern = (num) => {
     }
 
     //abcdcdcxcd 
-    if(str[2] === str[4] && str[4] === str[6] && str[6] === str[8] && str[3] === str[5] && str[5] === str[9]) {
+    if (str[2] === str[4] && str[4] === str[6] && str[6] === str[8] && str[3] === str[5] && str[5] === str[9]) {
         obj.abcdcdcxcd = true
     }
 
     //abcdabcdxy
-    if(str[0] === str[4] && str[1] === str[5] && str[6] === str[2] && str[3] === str[7] ) {
+    if (str[0] === str[4] && str[1] === str[5] && str[6] === str[2] && str[3] === str[7]) {
         obj.abcdabcdxy = true
     }
 
     //abcdcdxdcd
-    if(str[2] === str[4] && str[4] === str[8] && str[3] === str[5] && str[5] === str[7] && str[7] === str[9] ) {
+    if (str[2] === str[4] && str[4] === str[8] && str[3] === str[5] && str[5] === str[7] && str[7] === str[9]) {
         obj.abcdcdxdcd = true
     }
 
     //abcdxdcdcd 
-    if(str[2] === str[6] && str[6] === str[8] && str[3] === str[5] && str[5] === str[7] && str[7] === str[9] ) {
+    if (str[2] === str[6] && str[6] === str[8] && str[3] === str[5] && str[5] === str[7] && str[7] === str[9]) {
         obj.abcdxdcdcd = true
     }
 
     //abeabxydxy
-    if(str[0] === str[3] && str[1] === str[4] && str[5] === str[8] && str[6] === str[9] ) {
+    if (str[0] === str[3] && str[1] === str[4] && str[5] === str[8] && str[6] === str[9]) {
         obj.abeabxydxy = true
     }
 
     //abxxxyzzzy
-    if(str[2] === str[3] && str[3] === str[4] && str[8] === str[7] && str[6] === str[7] && str[5] === str[9] ) {
+    if (str[2] === str[3] && str[3] === str[4] && str[8] === str[7] && str[6] === str[7] && str[5] === str[9]) {
         obj.abxxxyzzzy = true
     }
 
     //abcdcdabcd
 
-    if(str[0] === str[6] && str[1] === str[7] && str[2] === str[4] && str[4] === str[8] && str[5] === str[9] && str[3] === str[5] ) {
+    if (str[0] === str[6] && str[1] === str[7] && str[2] === str[4] && str[4] === str[8] && str[5] === str[9] && str[3] === str[5]) {
         obj.abcdcdabcd = true
     }
 
     // is971
     let fffff = true
     let sum971 = 0
-    for(let i = 0 ; i < 10; i++) {
-        if(str[i] != '7' && str[i] != '9' && str[i] != '1') {
+    for (let i = 0; i < 10; i++) {
+        if (str[i] != '7' && str[i] != '9' && str[i] != '1') {
             fffff = false
         }
         sum971 += parseInt(str[i])
     }
 
-    function digSumToSingleDigit(n)
-    {
-        if (n === 0){
+    function digSumToSingleDigit(n) {
+        if (n === 0) {
             return 0
-        } 
+        }
         return (n % 9 === 0) ? 9 : (n % 9);
     }
 
-    if(fffff) {
+    if (fffff) {
         let k = digSumToSingleDigit(sum971)
-        if(k === 1 || k === 7 || k === 9) {
+        if (k === 1 || k === 7 || k === 9) {
             obj.is971 = true
         }
     }
@@ -514,7 +468,9 @@ const isNewCateg1 = (num) => {
 
 
 
+// routes
 
+// this route will be hit when 1st tab SHOW NEWLY ADDED tab is hit
 app.post('/hello', upload.array('file'), async (req, res, next) => {
     console.log('i got req')
     console.log(req.files);
@@ -589,177 +545,42 @@ app.post('/hello', upload.array('file'), async (req, res, next) => {
 
 })
 
-app.post('/searchdesign', async (req, res) => {
-
-    let data = req.body;
-
-    // console.log(data, "i am data");
-
-    let result = req.body.arr;
-    let pattern = req.body.search;
-    // console.log(pattern);
-
-    let patternLength = pattern.length;
-
-    let patternObj = {};
-    let temp_index = 0;
-
-    for await (let items of pattern) {
-        if (patternObj[items] === undefined) {
-            patternObj[items] = [];
-        }
-        patternObj[items].push(temp_index);
-        temp_index += 1;
-    }
-
-    // console.log(patternObj)
-
-    let myarr = [];
-    let dumb = [];
-    let curr_index = 1;
-
-
-    for await (let d of result) {
-
-        if (d === undefined || d === null) {
-            continue;
-        }
-        let strNumber = await d.toString();
-        let subStr = "";
-
-
-
-        for await (let digit of strNumber) {
-            let flag = true;
-            if (subStr.length === patternLength) {
-                let newSubStr = await subStr.slice(1);
-                subStr = newSubStr;
-            }
-
-            subStr += digit;
-
-            if (subStr.length < patternLength) {
-                continue;
-            }
-
-            // dumb.push(subStr);
-
-            for await (let key of Object.keys(patternObj)) {
-                let temp = [];
-                for await (let g of patternObj[key]) {
-                    await temp.push(subStr[g]);
-                }
-                if (key === '0' || key === '1' || key === '2' || key === '3' || key === '4' || key === '5' || key === '6' || key === '7' || key === '8' || key === '9') {
-                    await temp.push(key);
-                }
-
-                if (await allEqual(temp) === false) {
-                    flag = false;
-                    // dumb.push(temp);
-                    break;
-                }
-
-
-            }
-
-            if (flag === true) {
-                let object1 = {};
-                object1.id = curr_index;
-                object1.Number = d;
-                await myarr.push(object1);
-                curr_index += 1;
-            }
-
-        }
-
-
-
-    }
-
-    if (myarr.length === 0) {
-        let object1 = {};
-        object1.id = curr_index;
-        object1.Number = 'No numbers found';
-        await myarr.push(object1);
-    }
-
-    // console.log(myarr, curr_index, result.length, dumb.length, "hii bro");
-    // console.log(dumb);
-
-    res.send(myarr)
-
-})
-
-app.post('/pattern', upload.array('file'), async (req, res, next) => {
-
-
-
-    if (req.files === [] || req.files.length < 1) {
-        console.log(' i  am parent eror')
-        res.sendStatus(450);
-        return;
-    }
-
-    let allnumbers = [];
-
-    try {
-        var a3 = await req.files[0].buffer.toString();
-
-    }
-    catch (e) {
-        console.log('i am here')
-        res.sendStatus(450);
-        return;
-    }
-
-    // console.log(a3)
-
-    let c = await a3.split('\n');
-    let pattern = /\d{10}/g;
-    let result = await a3.match(pattern);
-    // console.log(result);
-
-    // for await (let d of c) {
-    //     let appu = await d.split(',');
-    //     let num = await appu[0];
-    //     let t = parseInt(num);
-    //     allnumbers.push(t);
-
-    // }
-
-    // await allnumbers.sort();
-
-    // res.send(allnumbers);
-
-
-    res.send(result);
-})
-
-
+// this route will be hit when 2nd tab FIND VIPS will be hit
 app.post('/vip', upload.array('file'), async (req, res, next) => {
 
     console.log('i got req')
 
     console.log(req.files);
-
+    
     if (req.files === [] || req.files.length < 1) {
-        res.sendStatus(450);
+        console.log("file is not uploaded properly please check again", "2nd tab")
+        res.status(406).json({"message": "file is not uploaded properly please check again, maybe you are uploading file but file is not reaching to the backend so please refresh the page and try to upload the file" })
         return;
     }
+
+    if(!req.files[0].mimetype.includes('csv')) {
+        console.log('file is not csv')
+        res.status(406).json({"message": "please upload a csv file" })
+        return;
+    }
+
+    let numbers_in_this_file = 0
+    let file_name = req.files[0].originalname
 
     let data = []
     try {
         var a1 = await req.files[0].buffer.toString();
-
     }
     catch (e) {
-        res.sendStatus(450);
+        console.log('file is uploaded in 2nd tab but can not read it please check your file')
+        res.status(406).json({"message": "file is uploaded but can not read your numbers", "error": e })
         return;
     }
 
-
-
+    // c.length will be the number of rows
     let c = await a1.split('\n');
+
+
     let abxbabab = [];
     let mxthree = [];
     let mxtwo = [];
@@ -776,112 +597,116 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
     let abcd_abcd = [];
     let x00x_y00y = [];
     let abcd_xyz_xyz = [];
-
     let super_vip = [];
     let new_categ1 = [];
-
     let ababdababe = [];
-
-
 
 
     for await (let d of c) {
         let appu = await d.split(',');
-        let num = await appu[0];
-        let t = parseInt(num);
-
-        let ans1 = await sumDigit(t);
-        let ans2 = await maximumDigits(t);
-        let ans3 = await maximumFreq(t);
-        let pattern = await findPattern(t);
-
-
-        if (ans2 <= 2) {
-            super_vip.push(t);
-
+        if (!appu || !appu.length) {
+            continue
         }
-        if (ans2 === 3) {
-            mxthree.push(t);
 
-        }
-       
-        if (ans3 >= 7) {
-            super_vip.push(t);
-        }
-        if (pattern !== null) {
-
-            if (pattern.abcd_x_abcd_y) {
-                abcd_x_abcd_y.push(t);
+        for await (let numbers_in_row of appu) {
+            if (!numbers_in_row) {
+                continue
             }
+            let num_to_string = numbers_in_row.toString()
+            if (num_to_string.length === 10) {
+                numbers_in_this_file += 1
+                let t = parseInt(num_to_string)
+                let ans1 = await sumDigit(t);
+                let ans2 = await maximumDigits(t);
+                let ans3 = await maximumFreq(t);
+                let pattern = await findPattern(t);
 
-            if (pattern.xy_abba_abba) {
-                xy_abba_abba.push(t);
-            }
+                if (ans2 <= 2) {
+                    super_vip.push(t);
+                }
+                if (ans2 === 3) {
+                    mxthree.push(t);
+                }
 
-            if (pattern.abcc_x_abcc_y) {
-                abcc_x_abcc_y.push(t);
-            }
+                if (ans3 >= 7) {
+                    super_vip.push(t);
+                }
+                if (pattern !== null) {
 
-            if (pattern.abc_xx_abc__yy) {
-                abc_xx_abc_yy.push(t);
-            }
+                    if (pattern.abcd_x_abcd_y) {
+                        abcd_x_abcd_y.push(t);
+                    }
 
-            if(pattern.abcdcdcxcd || pattern.abcdabcdxy || pattern.abcdcdxdcd || pattern.abcdxdcdcd) {
-                abxbabab.push(t)
-            }
+                    if (pattern.xy_abba_abba) {
+                        xy_abba_abba.push(t);
+                    }
 
-            if(pattern.abeabxydxy || pattern.abxxxyxxxy || pattern.abcdcdabcd || pattern.is971 ) {
-                others.push(t)
-            }
+                    if (pattern.abcc_x_abcc_y) {
+                        abcc_x_abcc_y.push(t);
+                    }
 
+                    if (pattern.abc_xx_abc__yy) {
+                        abc_xx_abc_yy.push(t);
+                    }
 
+                    if (pattern.abcdcdcxcd || pattern.abcdabcdxy || pattern.abcdcdxdcd || pattern.abcdxdcdcd) {
+                        abxbabab.push(t)
+                    }
 
-
-
-
-            // if (pattern.xy_a0_b0_c0_d0) {
-            //     xy_a0_b0_c0_d0.push(t);
-            // }
-
-            if (pattern.xy_abab_cdcd) {
-                xy_abab_cdcd.push(t);
-            }
-
-            if (pattern.abc_abc_wxyz) {
-                abc_abc_wxyz.push(t);
-            }
-
-            if (pattern.xxx_z_xxx) {
-                super_vip.push(t);
-            }
-
-            if (pattern.xy00_xb00 || pattern.xy00_xa00 || pattern.xxx_z_xxx || pattern.ab_xy_xy_ab_ab || pattern.ab_xy_ab_xy_xy || pattern.ab_zxxx_zaaa || pattern.xy00_xy00 || pattern.xyxy_yxyx || pattern.xxxxyxx || pattern.x00y_x00y || pattern.ab_xxx_cd_xxx || isPalindrome(t) || pattern.ab_xyxz_xyxz || pattern.ab_xyxy_xzxz || pattern.ababdababe || pattern.abxy0000xy || pattern.abc000bcbc || pattern.aabbcccxcx || pattern.aabbaaxyxy  || pattern.abcd1abcd2 || pattern.abxy00xyxy) {
-                super_vip.push(t);
-            }
-
-            if (pattern.xxxx) {
-                xxxx.push(t);
-            }
-
-            if (pattern.abcd_abcd) {
-                abcd_abcd.push(t);
-            }
-
-            if (pattern.x00x_y00y) {
-                x00x_y00y.push(t);
-            }
-
-            if (pattern.abcd_xyz_xyz) {
-                abcd_xyz_xyz.push(t);
-            }
+                    if (pattern.abeabxydxy || pattern.abxxxyxxxy || pattern.abcdcdabcd || pattern.is971) {
+                        others.push(t)
+                    }
 
 
-            if (isNewCateg1(t) === true || pattern.axyxyacdcd) {
-                new_categ1.push(t)
-            }
 
-            if (pattern.ababdababe) {
-                ababdababe.push(t);
+
+
+
+                    // if (pattern.xy_a0_b0_c0_d0) {
+                    //     xy_a0_b0_c0_d0.push(t);
+                    // }
+
+                    if (pattern.xy_abab_cdcd) {
+                        xy_abab_cdcd.push(t);
+                    }
+
+                    if (pattern.abc_abc_wxyz) {
+                        abc_abc_wxyz.push(t);
+                    }
+
+                    if (pattern.xxx_z_xxx) {
+                        super_vip.push(t);
+                    }
+
+                    if (pattern.xy00_xb00 || pattern.xy00_xa00 || pattern.xxx_z_xxx || pattern.ab_xy_xy_ab_ab || pattern.ab_xy_ab_xy_xy || pattern.ab_zxxx_zaaa || pattern.xy00_xy00 || pattern.xyxy_yxyx || pattern.xxxxyxx || pattern.x00y_x00y || pattern.ab_xxx_cd_xxx || isPalindrome(t) || pattern.ab_xyxz_xyxz || pattern.ab_xyxy_xzxz || pattern.ababdababe || pattern.abxy0000xy || pattern.abc000bcbc || pattern.aabbcccxcx || pattern.aabbaaxyxy || pattern.abcd1abcd2 || pattern.abxy00xyxy) {
+                        super_vip.push(t);
+                    }
+
+                    if (pattern.xxxx) {
+                        xxxx.push(t);
+                    }
+
+                    if (pattern.abcd_abcd) {
+                        abcd_abcd.push(t);
+                    }
+
+                    if (pattern.x00x_y00y) {
+                        x00x_y00y.push(t);
+                    }
+
+                    if (pattern.abcd_xyz_xyz) {
+                        abcd_xyz_xyz.push(t);
+                    }
+
+
+                    if (isNewCateg1(t) === true || pattern.axyxyacdcd) {
+                        new_categ1.push(t)
+                    }
+
+                    if (pattern.ababdababe) {
+                        ababdababe.push(t);
+                    }
+                }
             }
         }
     }
@@ -934,21 +759,13 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
     await new_categ1.sort();
     await new_categ1.reverse();
 
-
-
-
     data.push(super_vip);
-
-
     data.push(xxxx);
     data.push(x00x_y00y);
     data.push(abcd_abcd);
-
     data.push(abxbabab);
-
     data.push(mxthree);
     data.push(others);
-
     data.push(abcd_x_abcd_y);
     data.push(xy_abba_abba);
     data.push(abcc_x_abcc_y);
@@ -959,15 +776,145 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
     data.push(abcd_xyz_xyz);
     data.push(new_categ1);
 
-
-
-    res.send(data);
-
+    let viptable = {
+        file_name,
+        numbers_in_this_file,
+        data
+    }
+    res.send(viptable);
 })
 
+//THIS ROUTE WILL BE HIT WHEN 3RD TAB SEARCH SUPER PATTERN FILE WILL UPLOAD SUBMIT BUTTON IS PRESSED
+app.post('/pattern', upload.array('file'), async (req, res, next) => {
+    if (req.files === [] || req.files.length < 1) {
+        console.log("can not read any file")
+        res.status(450).json({"message": "can not read any file"});
+        return;
+    }
+    let allnumbers = [];
+    try {
+        var a3 = await req.files[0].buffer.toString();
+    }
+    catch (e) {
+        console.log('i am here hello hello')
+        res.status(450).json({"message": "can not read buffer data of your file" });
+        return;
+    }
+
+    // c.length is the length of the rows
+    let c = await a3.split('\n');
+
+    for await (let d of c) {
+        let appu = await d.split(',');
+        if (!appu || !appu.length) {
+            continue
+        }
+        for await (let numbers_in_row of appu) {
+            if (!numbers_in_row) {
+                continue
+            }
+            let num_to_string = numbers_in_row.toString()
+            if (num_to_string.length === 10) {
+                let t = parseInt(num_to_string)
+                allnumbers.push(t);
+            }
+        }
+    }
+
+    await allnumbers.sort();
+    res.send(allnumbers);
+})
+
+// this route will be hit SUBMIT BUTTON OF 10 DIGIT PATTERN IN 3RD TAB
+app.post('/searchdesign', async (req, res) => {
+
+    let data = req.body;
+    // console.log(data, "i am data");
+
+    // RESULT IS THE ARRAY OF THE NUMBERS WHICH YOU UPLOADED ON 3RD TAB
+    let result = req.body.arr
+    // console.log(result.length)
+
+    // PATTERN IS THE PATTERN YOU SEARCHED IN 10 DIGIT PATTERN
+    let pattern = req.body.search
+    console.log('SEARCHED PATTERN IS', pattern)
+
+    let patternLength = pattern.length;
+    // console.log(patternLength)
+
+    let patternObj = {};
+    let temp_index = 0;
+
+    for await (let items of pattern) {
+        if (!patternObj[items]) {
+            patternObj[items] = [];
+        }
+        patternObj[items].push(temp_index);
+        temp_index += 1;
+    }
+
+    // iF YOU SEARCHED ABAB in 10 DIGIT PATTERN
+    // THEN patternObj will be { A: [ 0, 2 ], B: [ 1, 3 ] }
+
+    let myarr = [];
+    let dumb = [];
+    let curr_index = 1;
+    // console.log(result)
+
+    for await (let d of result) {
+        if(!d) {
+            continue
+        }
+        let strNumber = await d.toString();
+        let subStr = "";
+        for await (let digit of strNumber) {
+            let flag = true;
+            if (subStr.length === patternLength) {
+                let newSubStr = await subStr.slice(1);
+                subStr = newSubStr;
+            }
+            subStr += digit;
+            if (subStr.length < patternLength) {
+                continue;
+            }
+            // dumb.push(subStr);
+            for await (let key of Object.keys(patternObj)) {
+                let temp = [];
+                for await (let g of patternObj[key]) {
+                    await temp.push(subStr[g]);
+                }
+                if (key === '0' || key === '1' || key === '2' || key === '3' || key === '4' || key === '5' || key === '6' || key === '7' || key === '8' || key === '9') {
+                    await temp.push(key);
+                }
+                if (await allEqual(temp) === false) {
+                    flag = false;
+                    break;
+                }
+                
+            }
+            if (flag === true) {
+                let object1 = {};
+                object1.id = curr_index;
+                object1.Number = d;
+                await myarr.push(object1);
+                curr_index += 1;
+            }
+        }
+    }
+
+    if (myarr.length === 0) {
+        let object1 = {};
+        object1.id = curr_index;
+        object1.Number = 'No numbers found';
+        await myarr.push(object1);
+    }
+    // console.log(myarr, curr_index, result.length, dumb.length, "hii bro");
+    // console.log(dumb);
+    res.send(myarr)
+})
 
 app.get('/', (req, res) => {
-    res.send("ojk");
+    res.send("hello you can search your numbers here, backend is working fine");
 })
 
 if (process.env.PRODUCTION === "production") {
