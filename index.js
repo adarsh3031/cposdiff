@@ -9,6 +9,8 @@ var upload = multer()
 const csv = require('csv-parser');
 const cors = require('cors');
 var timeout = require('connect-timeout')
+const async = require('async')
+const _ = require("lodash");
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -849,7 +851,7 @@ app.post('/searchdesign', async (req, res) => {
         if (!patternObj[items]) {
             patternObj[items] = [];
         }
-        patternObj[items].push(temp_index);
+        await patternObj[items].push(temp_index);
         temp_index += 1;
     }
 
@@ -861,6 +863,41 @@ app.post('/searchdesign', async (req, res) => {
     let curr_index = 1;
     // console.log(result)
 
+
+    const n = 100000 //tweak this to add more items per line
+
+    const brokenArrays = new Array(Math.ceil(items.length / n))
+    .fill()
+    .map(_ => items.splice(0, n))
+
+    // result array of arrays and its arrays contains 1 lack or less in each array
+    // [
+    //     [1 lack entries],
+    //     [1 lack entries],
+    //     [19000 entries]
+    // ]
+
+    let finalAnwser = await Promise.all(brokenArrays.map((arr, index) => {
+        search10DigitPattern(arr, patternLength, patternObj)
+    }))
+
+    let newArray = await _.flatten(finalAnwser);
+    for await (let num of newArray) {
+        await myarr.push({id: curr_index, Number: num})
+        curr_index += 1
+    }
+
+    if (myarr.length === 0) {
+        let object1 = {};
+        object1.id = curr_index;
+        object1.Number = 'No numbers found';
+        await myarr.push(object1);
+    }
+    res.send(myarr)
+})
+
+const search10DigitPattern = async (result, patternLength, patternObj) => {
+    let prr = []
     for await (let d of result) {
         if(!d) {
             continue
@@ -892,23 +929,12 @@ app.post('/searchdesign', async (req, res) => {
                 } 
             }
             if (flag === true) {
-                let object1 = {};
-                object1.id = curr_index;
-                object1.Number = d;
-                await myarr.push(object1);
-                curr_index += 1;
+                await prr.push(d);
             }
         }
     }
-
-    if (myarr.length === 0) {
-        let object1 = {};
-        object1.id = curr_index;
-        object1.Number = 'No numbers found';
-        await myarr.push(object1);
-    }
-    res.send(myarr)
-})
+    return prr
+}
 
 app.get('/', (req, res) => {
     res.send("hello you can search your numbers here, backend is working fine");
