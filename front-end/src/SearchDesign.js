@@ -67,12 +67,11 @@ const SearchDesign = () => {
         }
         setFilter(1);
         try {
-            var ans = await axios.post(url, postData);
+            var ans = await axios.post(url, postData, {timeout: 180000});
             await setFinalOutput(ans.data);
             if (ans) {
                 setFilter(0);
             }
-            // console.log(ans.data);
         }
         catch (e) {
             setFilter(0);

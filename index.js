@@ -926,5 +926,3 @@ if (process.env.PRODUCTION === "production") {
 app.listen(port, () => {
     console.log('app running server started');
 })
-
-app.timeout = 180000
