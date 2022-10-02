@@ -826,7 +826,7 @@ app.post('/pattern', timeout('180s'), upload.array('file'), haltOnTimedout, asyn
 })
 
 // this route will be hit SUBMIT BUTTON OF 10 DIGIT PATTERN IN 3RD TAB
-app.post('/searchdesign', timeout('10s'), haltOnTimedout, async (req, res) => {
+app.post('/searchdesign', timeout('180s'), haltOnTimedout, async (req, res) => {
 
     let data = req.body;
     // console.log(data, "i am data");
