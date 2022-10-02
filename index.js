@@ -866,9 +866,9 @@ app.post('/searchdesign', async (req, res) => {
 
     const n = 100000 //tweak this to add more items per line
 
-    const brokenArrays = new Array(Math.ceil(items.length / n))
+    const brokenArrays = new Array(Math.ceil(result.length / n))
     .fill()
-    .map(_ => items.splice(0, n))
+    .map(_ => result.splice(0, n))
 
     // result array of arrays and its arrays contains 1 lack or less in each array
     // [
