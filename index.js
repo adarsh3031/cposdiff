@@ -546,7 +546,7 @@ app.post('/hello', upload.array('file'), async (req, res, next) => {
 })
 
 // this route will be hit when 2nd tab FIND VIPS will be hit
-app.post('/vip',timeout('180s'), upload.array('file'), haltOnTimedout, async (req, res, next) => {
+app.post('/vip', upload.array('file'), async (req, res, next) => {
 
     console.log('i got req')
 
@@ -785,7 +785,7 @@ app.post('/vip',timeout('180s'), upload.array('file'), haltOnTimedout, async (re
 })
 
 //THIS ROUTE WILL BE HIT WHEN 3RD TAB SEARCH SUPER PATTERN FILE WILL UPLOAD SUBMIT BUTTON IS PRESSED
-app.post('/pattern', timeout('180s'), upload.array('file'), haltOnTimedout, async (req, res, next) => {
+app.post('/pattern', upload.array('file'), async (req, res, next) => {
     if (req.files === [] || req.files.length < 1) {
         console.log("can not read any file")
         res.status(450).json({"message": "can not read any file"});
@@ -826,7 +826,7 @@ app.post('/pattern', timeout('180s'), upload.array('file'), haltOnTimedout, asyn
 })
 
 // this route will be hit SUBMIT BUTTON OF 10 DIGIT PATTERN IN 3RD TAB
-app.post('/searchdesign', timeout('180s'), haltOnTimedout, async (req, res) => {
+app.post('/searchdesign', async (req, res) => {
 
     let data = req.body;
     // console.log(data, "i am data");
@@ -913,13 +913,6 @@ app.post('/searchdesign', timeout('180s'), haltOnTimedout, async (req, res) => {
 app.get('/', (req, res) => {
     res.send("hello you can search your numbers here, backend is working fine");
 })
-
-function haltOnTimedout (req, res, next) {
-    if (!req.timedout) {
-        console.log('there is NOT timedOUT')
-        next()
-    } 
-  }
 
 if (process.env.PRODUCTION === "production") {
     app.use(express.static("front-end/build"))
