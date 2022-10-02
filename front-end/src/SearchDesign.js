@@ -87,7 +87,7 @@ const SearchDesign = () => {
             setResult(abcd);
             return;
         }
-        console.log(ans.data, "i am response");
+        console.log(ans.data, "i am response for 10 digit pattern search");
     }
 
 

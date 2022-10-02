@@ -8,7 +8,7 @@ const multer = require('multer');
 var upload = multer()
 const csv = require('csv-parser');
 const cors = require('cors');
-const { Console } = require('console');
+var timeout = require('connect-timeout')
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -546,7 +546,7 @@ app.post('/hello', upload.array('file'), async (req, res, next) => {
 })
 
 // this route will be hit when 2nd tab FIND VIPS will be hit
-app.post('/vip', upload.array('file'), async (req, res, next) => {
+app.post('/vip',timeout('180s'), upload.array('file'), haltOnTimedout, async (req, res, next) => {
 
     console.log('i got req')
 
@@ -785,7 +785,7 @@ app.post('/vip', upload.array('file'), async (req, res, next) => {
 })
 
 //THIS ROUTE WILL BE HIT WHEN 3RD TAB SEARCH SUPER PATTERN FILE WILL UPLOAD SUBMIT BUTTON IS PRESSED
-app.post('/pattern', upload.array('file'), async (req, res, next) => {
+app.post('/pattern', timeout('180s'), upload.array('file'), haltOnTimedout, async (req, res, next) => {
     if (req.files === [] || req.files.length < 1) {
         console.log("can not read any file")
         res.status(450).json({"message": "can not read any file"});
@@ -826,7 +826,7 @@ app.post('/pattern', upload.array('file'), async (req, res, next) => {
 })
 
 // this route will be hit SUBMIT BUTTON OF 10 DIGIT PATTERN IN 3RD TAB
-app.post('/searchdesign', async (req, res) => {
+app.post('/searchdesign', timeout('10s'), haltOnTimedout, async (req, res) => {
 
     let data = req.body;
     // console.log(data, "i am data");
@@ -907,14 +907,19 @@ app.post('/searchdesign', async (req, res) => {
         object1.Number = 'No numbers found';
         await myarr.push(object1);
     }
-    // console.log(myarr, curr_index, result.length, dumb.length, "hii bro");
-    // console.log(dumb);
     res.send(myarr)
 })
 
 app.get('/', (req, res) => {
     res.send("hello you can search your numbers here, backend is working fine");
 })
+
+function haltOnTimedout (req, res, next) {
+    if (!req.timedout) {
+        console.log('there is NOT timedOUT')
+        next()
+    } 
+  }
 
 if (process.env.PRODUCTION === "production") {
     app.use(express.static("front-end/build"))
