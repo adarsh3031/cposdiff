@@ -889,8 +889,7 @@ app.post('/searchdesign', async (req, res) => {
                 if (await allEqual(temp) === false) {
                     flag = false;
                     break;
-                }
-                
+                } 
             }
             if (flag === true) {
                 let object1 = {};
@@ -928,6 +927,4 @@ app.listen(port, () => {
     console.log('app running server started');
 })
 
-
-
-
+app.timeout = 180000
