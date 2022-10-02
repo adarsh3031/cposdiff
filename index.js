@@ -878,7 +878,7 @@ app.post('/searchdesign', async (req, res) => {
     // ]
 
     let finalAnwser = await Promise.all(brokenArrays.map((arr, index) => {
-        search10DigitPattern(arr, patternLength, patternObj)
+        return search10DigitPattern(arr, patternLength, patternObj)
     }))
 
     let newArray = await _.flatten(finalAnwser);
