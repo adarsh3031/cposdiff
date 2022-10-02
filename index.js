@@ -11,6 +11,7 @@ const cors = require('cors');
 var timeout = require('connect-timeout')
 const async = require('async')
 const _ = require("lodash");
+const { Console } = require('console');
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -834,7 +835,7 @@ app.post('/searchdesign', async (req, res) => {
     // console.log(data, "i am data");
 
     // PATTERN IS THE PATTERN YOU SEARCHED IN 10 DIGIT PATTERN
-    let {brokenArrays, pattern} = req.body
+    let {arr, pattern} = req.body
     console.log('SEARCHED PATTERN IS', pattern)
 
     let patternLength = pattern.length;
@@ -843,6 +844,8 @@ app.post('/searchdesign', async (req, res) => {
     let patternObj = {};
     let temp_index = 0;
 
+    // iF YOU SEARCHED ABAB in 10 DIGIT PATTERN
+    // THEN patternObj will be { A: [ 0, 2 ], B: [ 1, 3 ] }
     for await (let items of pattern) {
         if (!patternObj[items]) {
             patternObj[items] = [];
@@ -851,22 +854,8 @@ app.post('/searchdesign', async (req, res) => {
         temp_index += 1;
     }
 
-    // iF YOU SEARCHED ABAB in 10 DIGIT PATTERN
-    // THEN patternObj will be { A: [ 0, 2 ], B: [ 1, 3 ] }
-
-    // BROKEN array of arrays and its arrays contains 1 lack or less in each array
-    // [
-    //     [1 lack entries],
-    //     [1 lack entries],
-    //     [19000 entries]
-    // ]
-
-    let finalAnwser = await Promise.all(brokenArrays.map((arr, index) => {
-        return search10DigitPattern(arr, patternLength, patternObj)
-    }))
-
-    let newArray = await _.flatten(finalAnwser);
-
+    let newArray = await search10DigitPattern(arr, patternLength, patternObj)
+    // console.log(newArray)
     res.send(newArray)
 })
 

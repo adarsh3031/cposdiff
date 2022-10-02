@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import Backdrop from './Backdrop'
+import _ from "lodash";
 
 import DataGridShow from './Table/DataGridShow'
 
@@ -58,52 +59,59 @@ const SearchDesign = () => {
     const searchPattern = async () => {
         let url = '/searchdesign';
         // let url = 'http://localhost:8000/searchdesign';
-        // let postArr = [result, patternObj]
 
         const n = 100000 //tweak this to add more items per line
-
-        const brokenArrays = await new Array(Math.ceil(result.length / n))
+        let mirrorResult = await _.cloneDeep(result);
+        let brokenArrays = await new Array(Math.ceil(mirrorResult.length / n))
         .fill()
-        .map(_ => result.splice(0, n))
+        .map(_ => mirrorResult.splice(0, n))
 
-        let postData = {
-            // "pattern": patternObj,
-            "brokenArrays": brokenArrays,
-            "pattern": search,
-        }
-        console.log(postData, 'this is the data we are sending for search 10 digit pattern')
-        setFilter(1);
-        try {
-            var ans = await axios.post(url, postData, {timeout: 180000});
-            console.log(ans.data)
-            let arrayResult = await ans.data
-            console.log(ans.data)
-            let answerArray = []
-            let ind = 1
-            for await (let a of arrayResult) {
-              answerArray.push({id: ind, Number: a})
-              ind += 1
+        console.log(brokenArrays, 'THIS IS BROKEN ARRAYS')
+
+        setFilter(1)
+        let prr = []
+
+        try{
+          for await (let arr of brokenArrays) {
+            let postData = {
+              "arr": arr,
+              "pattern": search,
             }
-            await setFinalOutput(answerArray);
-            if (ans) {
-                setFilter(0);
-            }
-        }
-        catch (e) {
+            console.log(postData, 'this is the data we are sending for search 10 digit pattern')
+            let ans = await axios.post(url, postData)
+            let d = await ans.data
+            await prr.push(d)
+          }
+  
+          let arrayResult = await _.flatten(prr);
+          var answerArray = []
+          let ind = 1
+          for await (let a of arrayResult) {
+            answerArray.push({id: ind, Number: a})
+            ind += 1
+          }
+          await setFinalOutput(answerArray);
+          if (answerArray) {
             setFilter(0);
-            console.log(e)
-            console.log(e.message)
-            let networkerror = 'error'
-            if(e.message === 'Network Error') {
-                networkerror = 'please check whether your backend is connected or not or you must be connected to an INTERNET Connection'
-                console.log('please check whether your backend is connected or not or you must be connected to an INTERNET Connection')
-            }
-            console.log(e?.response)
-            let abcd = [["error here"], ["statusCode: ", e?.response?.request?.status], ["errorMessage: ", e?.response?.data?.message ], [e?.message], [networkerror]];
-            setResult(abcd);
-            return;
+          }
         }
-        console.log(ans.data, "i am response for 10 digit pattern search");
+        catch(e) {
+          setFilter(0);
+          console.log(e)
+          console.log(e.message)
+          let networkerror = 'error'
+          if(e.message === 'Network Error') {
+              networkerror = 'please check whether your backend is connected or not or you must be connected to an INTERNET Connection'
+              console.log('please check whether your backend is connected or not or you must be connected to an INTERNET Connection')
+          }
+          console.log(e?.response)
+          let abcd = [["error here"], ["statusCode: ", e?.response?.request?.status], ["errorMessage: ", e?.response?.data?.message ], [e?.message], [networkerror]];
+          setResult(abcd);
+          return;
+        }
+       
+        console.log(answerArray, "i am response for 10 digit pattern search");
+        
     }
 
 
