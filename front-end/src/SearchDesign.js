@@ -68,7 +68,16 @@ const SearchDesign = () => {
         setFilter(1);
         try {
             var ans = await axios.post(url, postData, {timeout: 180000});
-            await setFinalOutput(ans.data);
+            console.log(ans.data)
+            let arrayResult = await ans.data
+            console.log(ans.data)
+            let answerArray = []
+            let ind = 1
+            for await (let a of arrayResult) {
+              answerArray.push({id: ind, Number: a})
+              ind += 1
+            }
+            await setFinalOutput(answerArray);
             if (ans) {
                 setFilter(0);
             }

@@ -882,18 +882,8 @@ app.post('/searchdesign', async (req, res) => {
     }))
 
     let newArray = await _.flatten(finalAnwser);
-    for await (let num of newArray) {
-        await myarr.push({id: curr_index, Number: num})
-        curr_index += 1
-    }
 
-    if (myarr.length === 0) {
-        let object1 = {};
-        object1.id = curr_index;
-        object1.Number = 'No numbers found';
-        await myarr.push(object1);
-    }
-    res.send(myarr)
+    res.send(newArray)
 })
 
 const search10DigitPattern = async (result, patternLength, patternObj) => {
