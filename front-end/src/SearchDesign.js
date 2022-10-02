@@ -60,11 +60,18 @@ const SearchDesign = () => {
         // let url = 'http://localhost:8000/searchdesign';
         // let postArr = [result, patternObj]
 
+        const n = 100000 //tweak this to add more items per line
+
+        const brokenArrays = await new Array(Math.ceil(result.length / n))
+        .fill()
+        .map(_ => result.splice(0, n))
+
         let postData = {
             // "pattern": patternObj,
-            "arr": result,
-            "search": search,
+            "brokenArrays": brokenArrays,
+            "pattern": search,
         }
+        console.log(postData, 'this is the data we are sending for search 10 digit pattern')
         setFilter(1);
         try {
             var ans = await axios.post(url, postData, {timeout: 180000});

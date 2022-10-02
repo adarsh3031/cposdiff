@@ -833,12 +833,8 @@ app.post('/searchdesign', async (req, res) => {
     let data = req.body;
     // console.log(data, "i am data");
 
-    // RESULT IS THE ARRAY OF THE NUMBERS WHICH YOU UPLOADED ON 3RD TAB
-    let result = req.body.arr
-    // console.log(result.length)
-
     // PATTERN IS THE PATTERN YOU SEARCHED IN 10 DIGIT PATTERN
-    let pattern = req.body.search
+    let {brokenArrays, pattern} = req.body
     console.log('SEARCHED PATTERN IS', pattern)
 
     let patternLength = pattern.length;
@@ -858,19 +854,7 @@ app.post('/searchdesign', async (req, res) => {
     // iF YOU SEARCHED ABAB in 10 DIGIT PATTERN
     // THEN patternObj will be { A: [ 0, 2 ], B: [ 1, 3 ] }
 
-    let myarr = [];
-    let dumb = [];
-    let curr_index = 1;
-    // console.log(result)
-
-
-    const n = 100000 //tweak this to add more items per line
-
-    const brokenArrays = new Array(Math.ceil(result.length / n))
-    .fill()
-    .map(_ => result.splice(0, n))
-
-    // result array of arrays and its arrays contains 1 lack or less in each array
+    // BROKEN array of arrays and its arrays contains 1 lack or less in each array
     // [
     //     [1 lack entries],
     //     [1 lack entries],
