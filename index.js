@@ -11,7 +11,6 @@ const cors = require('cors');
 var timeout = require('connect-timeout')
 const async = require('async')
 const _ = require("lodash");
-const { Console } = require('console');
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -19,6 +18,13 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 const staticPath = path.join(__dirname, '/front-end/build');
 console.log(staticPath)
 app.use(express.static(staticPath));
+
+if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+    app.use(express.static("front-end/build"))
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'front-end', 'build', 'index.html'));
+    })
+}
 
 
 
