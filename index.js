@@ -21,9 +21,6 @@ app.use(express.static(staticPath));
 
 if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
     app.use(express.static("front-end/build"))
-    app.get("*", (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'front-end', 'build', 'index.html'));
-    })
 }
 
 
