@@ -903,7 +903,7 @@ const search10DigitPattern = async (result, patternLength, patternObj) => {
 }
 
 app.get('/', (req, res) => {
-    res.send("hello you can search your numbers here, backend is working fine");
+     res.sendFile(path.resolve(__dirname, 'front-end', 'build', 'index.html'));
 })
 
 if (process.env.PRODUCTION === "production") {
