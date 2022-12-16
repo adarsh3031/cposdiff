@@ -19,9 +19,9 @@ const staticPath = path.join(__dirname, '/front-end/build');
 console.log(staticPath)
 app.use(express.static(staticPath));
 
-if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
-    app.use(express.static("front-end/build"))
-}
+// if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+//     app.use(express.static("front-end/build"))
+// }
 
 
 
@@ -903,7 +903,7 @@ const search10DigitPattern = async (result, patternLength, patternObj) => {
 }
 
 app.get('/', (req, res) => {
-     res.sendFile(path.resolve(__dirname, 'front-end', 'build', 'index.html'));
+     res.send('backend sprinted')
 })
 
 if (process.env.PRODUCTION === "production") {
